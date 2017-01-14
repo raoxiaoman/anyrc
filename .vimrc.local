@@ -129,7 +129,6 @@ let g:disable_protodef_sorting=1
 
 
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
-nmap <F2> :NERDTreeToggle<CR>
 " 设置NERDTree子窗口宽度
 let NERDTreeWinSize=35
 " 设置NERDTree子窗口位置
@@ -146,8 +145,8 @@ let NERDTreeAutoDeleteBuffer=1
 " 显示/隐藏 MiniBufExplorer 窗口
 map <Leader>bl :MBEToggle<cr>
 " buffer 切换快捷键
-map <F4> :MBEbn<cr>
-map <F3> :MBEbp<cr>
+map <F3> :MBEbn<cr>
+map <F2> :MBEbp<cr>
 
 
 nmap <Leader>g :!rm -rf main<CR>:wa<CR>:make<CR>:cw<CR><CR>:!./main<CR>
@@ -159,7 +158,7 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_error_symbol='>>'
 let g:syntastic_warning_symbol='>'
-let g:syntastic_check_on_open=1
+let g:syntastic_check_on_open=0
 let g:syntastic_check_on_wq=0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -189,6 +188,7 @@ nnoremap <Leader>sp :lprevious<cr>
 " 使用 ctrlsf.vim
 " 插件在工程内全局查找光标所在关键字，设置快捷键。快捷键速记法：search in
 " project
+let g:ctrlsf_ackprg = 'ack2'
 nnoremap <Leader>sp :CtrlSF<CR>
 
 set cscopetag " 使用 cscope 作为 tags 命令
@@ -200,3 +200,11 @@ let GtagsCscope_Auto_Load = 1
 let CtagsCscope_Auto_Map = 1
 let GtagsCscope_Quiet = 1
 
+noremap <F4> :Autoformat<CR>
+let g:autoformat_verbosemode=1
+
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
