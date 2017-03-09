@@ -1,0 +1,3 @@
+Bundle "fholgado/minibufexpl.vim"
+Bundle "derekwyatt/vim-fswitch"
+
