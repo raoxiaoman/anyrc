@@ -1,6 +1,6 @@
-let mapleader=","
-
-" 让配置变更立即生效
+let g:tex_nospell=1
+let mapeader=","
+"让配置立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 " use molokai color
 "let g:molokai_original = 1
@@ -66,9 +66,8 @@ nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
 highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
 let g:ycm_global_ycm_extra_conf = '/root/.ycm_extra_conf.py'
 inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项"
-nnoremap <leader>gg :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration <CR>
 " 只能是 #include 或已打开的文件
-nnoremap <leader>fg :YcmCompleter GoToDefinition<CR>
 " 补全功能在注释中同样有效
 let g:ycm_complete_in_comments=1
 " 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
@@ -177,6 +176,7 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-let g:molokai_termcolors=16
-color molokai
 
+color molokai
+let g:molokai_original = 1
+let g:molokai_termcolors=16
