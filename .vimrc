@@ -41,16 +41,16 @@ set background=dark
 colorscheme dracula
 hi Normal ctermfg=white ctermbg=black
 
-" 设置背景在黑色和透明间切换
-map <leader>bn :hi Normal ctermfg=white ctermbg=none<CR>
-map <leader>nb :hi Normal ctermfg=white ctermbg=black<CR>
-
 " 设置主题颜色为molokai
 "let g:rehash256 = 1
 "colorscheme molokai
 
 " 设置leader键
 let mapleader=","
+
+" 设置背景在黑色和透明间切换
+map <leader>bn :hi Normal ctermfg=white ctermbg=none<CR>
+map <leader>nb :hi Normal ctermfg=white ctermbg=black<CR>
 
 "设置行号
 set number
