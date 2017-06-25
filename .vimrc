@@ -42,6 +42,9 @@ hi Normal ctermfg=white ctermbg=black
 " 设置leader键
 let mapleader=","
 
+"设置行号
+set number
+
 "让配置立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
@@ -163,6 +166,9 @@ set nocompatible
 filetype off
 let &runtimepath.=',~/.vim/plugged/ale/'
 filetype plugin on
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
 
 " 设置 ctags 对哪些代码标识符生成标签
 let g:tagbar_type_cpp = {
