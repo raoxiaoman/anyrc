@@ -59,7 +59,8 @@ set number
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 " ESC不方便
-imap <C-I> <Esc>
+"imap <C-I> <Esc>
+inoremap fd <Esc>
 " UltiSnips 的 tab 键与 YCM 冲突，重新设定
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
