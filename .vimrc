@@ -27,7 +27,9 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'derekwyatt/vim-protodef'
 Plug 'derekwyatt/vim-fswitch'
-
+Plug 'godlygeek/tabular'
+Plug 'dracula/vim'
+Plug 'tomasr/molokai'
 " Initialize plugin system
 call plug#end()
 
@@ -38,6 +40,14 @@ set t_Co=256
 set background=dark
 colorscheme dracula
 hi Normal ctermfg=white ctermbg=black
+
+" 设置背景在黑色和透明间切换
+map <leader>bn :hi Normal ctermfg=white ctermbg=none<CR>
+map <leader>nb :hi Normal ctermfg=white ctermbg=black<CR>
+
+" 设置主题颜色为molokai
+"let g:rehash256 = 1
+"colorscheme molokai
 
 " 设置leader键
 let mapleader=","
@@ -71,7 +81,7 @@ let g:ycm_confirm_extra_conf=0
 " 开启 YCM 标签补全引擎
 let g:ycm_collect_identifiers_from_tags_files=1
 " 引入 C++ 标准库tags
-set tags+=/data/misc/software/misc./vim/stdcpp.tags
+set tags+=/home/raohui/.vim/tags/stdcpp.tags
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
 inoremap <leader>; <C-x><C-o>
 " 补全内容不以分割子窗口形式出现，只显示补全列表
@@ -169,6 +179,10 @@ filetype plugin on
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
+
+" 设置保存快捷键
+map <C-w> :w<CR>
+imap <C-w> <C-o>:w<CR>
 
 " 设置 ctags 对哪些代码标识符生成标签
 let g:tagbar_type_cpp = {
