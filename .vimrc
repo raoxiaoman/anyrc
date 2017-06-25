@@ -32,6 +32,7 @@ Plug 'dracula/vim'
 Plug 'tomasr/molokai'
 Plug 'jiangmiao/auto-pairs'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'easymotion/vim-easymotion'
 " Initialize plugin system
 call plug#end()
 
@@ -118,6 +119,19 @@ let g:ycm_cache_omnifunc=0
 let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_key_invoke_completion = '<C-a>'
 
+" 设置EasyMotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+" Gif config
+map / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-prev)
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
 
 "" 设置NERDTReeToggle快捷键
 map <leader>l :NERDTreeToggle<CR>
