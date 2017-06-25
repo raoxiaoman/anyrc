@@ -30,8 +30,23 @@ Plug 'derekwyatt/vim-fswitch'
 Plug 'godlygeek/tabular'
 Plug 'dracula/vim'
 Plug 'tomasr/molokai'
+Plug 'jiangmiao/auto-pairs'
+Plug 'nathanaelkane/vim-indent-guides'
 " Initialize plugin system
 call plug#end()
+
+"设置换行和缩进
+set smartindent
+" 自适应不同语言的智能缩进
+filetype indent on
+" 将制表符扩展为空格
+set expandtab
+" 设置编辑时制表符占用空格数
+set tabstop=4
+" 设置格式化时制表符占用空格数
+set shiftwidth=4
+" 让vim 把连续数量的空格视为一个制表符
+set softtabstop=4
 
 " 设主题颜色为dracula
 set backspace=2
@@ -57,6 +72,16 @@ set number
 
 "让配置立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
+" 设置indent_guides
+" 随 vim 自启动
+let g:indent_guides_enable_on_vim_startup=1
+" 从第二层开始可视化显示缩进
+let g:indent_guides_start_level=2
+" 色块宽度
+let g:indent_guides_guide_size=1
+" 快捷键 i 开/关缩进可视化
+nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 
 " ESC不方便
 "imap <C-I> <Esc>
