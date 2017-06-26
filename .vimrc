@@ -9,6 +9,7 @@
 "别人笑我忒疯癫，我笑自己命太贱；
 "不见满街漂亮妹，哪个归得程序员？
 
+"设置插件管理
 call plug#begin('~/.vim/plugged')
 Plug 'dyng/ctrlsf.vim'
 Plug 'SirVer/ultisnips'
@@ -62,10 +63,11 @@ set tabstop=4
 set shiftwidth=4
 " 让vim 把连续数量的空格视为一个制表符
 set softtabstop=4
+set backspace=2
+set nocompatible
 
 " 设主题颜色为dracula
-if isdirectory("./.vim/plugged/vim/colors")
-    set backspace=2
+if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
     syntax on
     set t_Co=256
     set background=dark
@@ -106,10 +108,10 @@ inoremap fd <Esc>
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
-let g:UltiSnipsSnippetDirectories=["./.vim/mysnippets"]
+let g:UltiSnipsSnippetDirectories=["~/.vim/mysnippets"]
 
-" 设置代码补全和挑战插件YouCompleteMe
-if isdirectory("./.vim/plugged/YouCompleteMe/")
+"设置YouCompleteMe代码补全和跳转插件
+if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     " YCM 补全菜单配色
     "选中项
     nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
@@ -142,8 +144,6 @@ map / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map n <Plug>(easymotion-next)
 map N <Plug>(easymotion-prev)
-
-" JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
@@ -173,7 +173,6 @@ let CtagsCscope_Auto_Map = 1
 let GtagsCscope_Quiet = 1
 set cscopetag " 使用 cscope 作为 tags 命令
 set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
-
 
 "设置格式化插件autofarmat
 noremap <F4> :Autoformat<CR>
