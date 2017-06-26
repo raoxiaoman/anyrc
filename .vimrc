@@ -122,7 +122,6 @@ let g:ycm_key_invoke_completion = '<C-a>'
 " 设置EasyMotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Turn on case insensitive feature
-let g:EasyMotion_smartcase = 1
 " Gif config
 map / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
@@ -221,8 +220,8 @@ let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 
 " 设置保存快捷键
-map <C-w> :w<CR>
-imap <C-w> <C-o>:w<CR>
+map <leader>w :w<CR>
+imap <leader>w <C-o>:w<CR>
 
 " 设置 ctags 对哪些代码标识符生成标签
 let g:tagbar_type_cpp = {
