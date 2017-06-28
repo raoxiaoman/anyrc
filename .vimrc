@@ -96,7 +96,7 @@ let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_start_level=2
 " 色块宽度
 let g:indent_guides_guide_size=1
-" 快捷键 i 开/关缩进可视化
+" 快捷键i开/关缩进可视化
 nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 
 " ESC不方便,设置fd快捷键代替
@@ -219,9 +219,11 @@ let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 
 " 设置保存快捷键
-map <leader>w :w<CR>
-imap <leader>w <C-o>:w<CR>
+map <C-s> :w<CR>
+imap <C-s> <C-o>:w<CR>
 
+" 设置保存退出快捷键
+nnoremap zz :wq<CR>
 " 设置function视图插件tagbar的信息
 " 设置 tagbar 子窗口的位置出现在主编辑区的左边
 let tagbar_right=1
