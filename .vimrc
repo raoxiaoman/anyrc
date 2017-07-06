@@ -66,6 +66,8 @@ set softtabstop=4
 set backspace=2
 set nocompatible
 
+"设置鼠标开启
+set mouse=a
 " 设主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
     syntax on
