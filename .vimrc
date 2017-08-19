@@ -10,7 +10,7 @@
 "不见满街漂亮妹，哪个归得程序员？
 
 "设置插件管理
-""需要先安装插件vim-plug
+"需要先安装插件vim-plug
 "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
 Plug 'dyng/ctrlsf.vim'
@@ -68,6 +68,8 @@ set softtabstop=4
 set backspace=2
 set nocompatible
 
+"设置鼠标开启
+set mouse=a
 " 设主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
     syntax on
