@@ -10,12 +10,14 @@
 "不见满街漂亮妹，哪个归得程序员？
 
 "设置插件管理
+""需要先安装插件vim-plug
+"curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
 Plug 'dyng/ctrlsf.vim'
 Plug 'SirVer/ultisnips'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe',{'dir': ' ~/.vim/plugged/YouCompleteMe','do': './install.sh --clang-completer' }
 "Plug 'fholgado/minibufexpl.vim'
 Plug 'mhinz/vim-signify'
 "Plug 'tpope/vim-commentary'
