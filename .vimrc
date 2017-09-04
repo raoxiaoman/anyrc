@@ -75,7 +75,8 @@ set smartindent
 filetype indent on
 " 将制表符扩展为空格
 set expandtab
-" 设置编辑时制表符占用空格数set tabstop=4
+" 设置编辑时制表符占用空格数
+set tabstop=4
 " 设置格式化时制表符占用空格数
 set shiftwidth=4
 " 让vim 把连续数量的空格视为一个制表符
@@ -142,8 +143,8 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     nnoremap <C-b> :YcmCompleter GoToDefinitionElseDeclaration <CR>
     " 补全功能在注释中同样有效
     let g:ycm_complete_in_comments=1
-    " 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
-    let g:ycm_confirm_extra_conf=0
+    " 允许 vim 加载 .ycm_extra_conf.py 文件
+    let g:ycm_confirm_extra_conf=1
     " 开启 YCM 标签补全引擎
     let g:ycm_collect_identifiers_from_tags_files=1
     " 引入 C++ 标准库tags
@@ -182,9 +183,7 @@ let NERDTreeMinimalUI=1
 " 删除文件时自动删除文件对应 buffer
 let NERDTreeAutoDeleteBuffer=1
 
-" 使用 ctrlsf.vim
-" 插件在工程内全局查找光标所在关键字，设置快捷键。快捷键速记法：search in
-" project
+" 使用 ctrlsf.vim插件在工程内全局查找光标所在关键字，设置快捷键。
 let g:ctrlsf_ackprg = 'ag'
 nnoremap <C-f> :CtrlSF
 
@@ -239,8 +238,9 @@ imap <leader>w <C-o>:w<CR>
 
 " 设置保存退出快捷键
 nnoremap zz :wq<CR>
+
 " 设置function视图插件tagbar的信息
-" 设置 tagbar 子窗口的位置出现在主编辑区的左边
+" 设置 tagbar 子窗口的位置出现在主编辑区的右边
 let tagbar_right=1
 " 设置显示／隐藏标签列表子窗口的快捷键。
 nnoremap <F5> :TagbarToggle<CR>
