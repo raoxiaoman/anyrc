@@ -142,7 +142,7 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
     let g:ycm_global_ycm_extra_conf = '/home/raohui/.ycm_extra_conf.py'
     inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项"
-    nnoremap <C-b> :YcmCompleter GoToDefinitionElseDeclaration <CR>
+    nnoremap <C-b> :YcmCompleter GoTo <CR>
     " 补全功能在注释中同样有效
     let g:ycm_complete_in_comments=1
     " 允许 vim 加载 .ycm_extra_conf.py 文件
