@@ -146,7 +146,7 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     " 补全功能在注释中同样有效
     let g:ycm_complete_in_comments=1
     " 允许 vim 加载 .ycm_extra_conf.py 文件
-    let g:ycm_confirm_extra_conf=1
+    let g:ycm_confirm_extra_conf=0
     " 开启 YCM 标签补全引擎
     let g:ycm_collect_identifiers_from_tags_files=1
     " 引入 C++ 标准库tags
