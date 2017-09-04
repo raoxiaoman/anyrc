@@ -29,6 +29,8 @@ Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer' }
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 "功能：git修改显示
 Plug 'mhinz/vim-signify'
+"功能：vim里面使用git
+Plug 'tpope/vim-fugitive'
 "功能：代码函数跳转
 Plug 'aceofall/gtags.vim'
 "功能：代码格式化
