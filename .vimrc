@@ -13,39 +13,56 @@
 ""需要先安装插件vim-plug
 "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
-Plug 'dyng/ctrlsf.vim'
-Plug 'SirVer/ultisnips'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'Valloric/YouCompleteMe',{'dir': ' ~/.vim/plugged/YouCompleteMe','do': './install.sh --clang-completer' }
-"Plug 'fholgado/minibufexpl.vim'
-Plug 'mhinz/vim-signify'
-"Plug 'tpope/vim-commentary'
-Plug 'rdnetto/YCM-Generator'
-Plug 'derekwyatt/vim-protodef'
-Plug 'derekwyatt/vim-fswitch'
-Plug 'aceofall/gtags.vim'
-Plug 'Chiel92/vim-autoformat'
-Plug 'junegunn/vim-easy-align'
-Plug 'honza/vim-snippets'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-Plug 'scrooloose/nerdcommenter'
-Plug 'w0rp/ale'
+"功能：在当前目录下所有文件的内容查找目标单词
+Plug 'dyng/ctrlsf.vim' 
+"功能：在当前目录查找目标文件
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'majutsushi/tagbar'
-Plug 'justinmk/vim-sneak'
-Plug 'rking/ag.vim'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'derekwyatt/vim-protodef'
-Plug 'derekwyatt/vim-fswitch'
-Plug 'godlygeek/tabular'
+"功能：vim主题
 Plug 'dracula/vim'
 Plug 'tomasr/molokai'
-Plug 'jiangmiao/auto-pairs'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'easymotion/vim-easymotion'
+"功能：状态栏和标签页,主题
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"功能：代码补全以及代码函数跳转
+Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer' }
+"功能：生成YouCompleteMe的配置文件
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+"功能：git修改显示
+Plug 'mhinz/vim-signify'
+"功能：代码函数跳转
+Plug 'aceofall/gtags.vim'
+"功能：代码格式化
+Plug 'Chiel92/vim-autoformat'
+"功能: 代码块补全引擎
+Plug 'SirVer/ultisnips'
+"功能：代码块集合
 Plug 'honza/vim-snippets'
+"功能：文本对齐
+Plug 'junegunn/vim-easy-align'
+"功能：代码自动缩进
+Plug 'nathanaelkane/vim-indent-guides'
+"功能：代码注释
+Plug 'scrooloose/nerdcommenter'
+"功能：代码错误提示异步
+Plug 'w0rp/ale'
+"功能：列出当前代码的函数树
+Plug 'majutsushi/tagbar'
+"功能：列出当前路径的目录树
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"功能：光标跳转（匹配两个字符）
+Plug 'justinmk/vim-sneak'
+"功能：光标跳转（匹配所有字符）
+Plug 'easymotion/vim-easymotion'
+"功能：在当前目录查找目标文件
+Plug 'rking/ag.vim'
+"功能：多光标选中
+Plug 'terryma/vim-multiple-cursors'
+"功能：c++函数定义自动生成函数实现
+Plug 'derekwyatt/vim-protodef'
+"功能：c++在.h和.cpp文件间跳转
+Plug 'derekwyatt/vim-fswitch'
+"功能：各种配对符号自动补全
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 "设置编码
@@ -64,7 +81,11 @@ set shiftwidth=4
 " 让vim 把连续数量的空格视为一个制表符
 set softtabstop=4
 set backspace=2
+"设置关闭兼容模式
 set nocompatible
+"设置命令模式补全列表
+set wildmenu
+"set wildmode=list:full
 
 " 设主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
@@ -189,7 +210,7 @@ nnoremap <F3> :bp<CR>
 " 设置搜索文件插件FZF快捷键
 map <C-p> :FZF<CR>
 
-" 设置相同单词一起改名插件multi_cursor
+" 设置相同多光标控制插件multi_cursor
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-j>'
 let g:multi_cursor_skip_key='<C-k>'
