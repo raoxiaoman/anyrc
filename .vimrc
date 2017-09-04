@@ -10,7 +10,7 @@
 "不见满街漂亮妹，哪个归得程序员？
 
 "设置插件管理
-"需要先安装插件vim-plug
+""需要先安装插件vim-plug
 "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
 Plug 'dyng/ctrlsf.vim'
@@ -37,7 +37,6 @@ Plug 'majutsushi/tagbar'
 Plug 'justinmk/vim-sneak'
 Plug 'rking/ag.vim'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'derekwyatt/vim-protodef'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'godlygeek/tabular'
@@ -59,8 +58,7 @@ set smartindent
 filetype indent on
 " 将制表符扩展为空格
 set expandtab
-" 设置编辑时制表符占用空格数
-set tabstop=4
+" 设置编辑时制表符占用空格数set tabstop=4
 " 设置格式化时制表符占用空格数
 set shiftwidth=4
 " 让vim 把连续数量的空格视为一个制表符
@@ -68,8 +66,6 @@ set softtabstop=4
 set backspace=2
 set nocompatible
 
-"设置鼠标开启
-set mouse=a
 " 设主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
     syntax on
@@ -190,14 +186,8 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 nnoremap <F2> :bn<CR>
 nnoremap <F3> :bp<CR>
 
-" 设置搜索文件插件CtrlP快捷键
-map <C-p> :CtrlP<CR>
-" CtrlP和ag搭配
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-    let g:ctrlp_use_caching = 0
-endif
+" 设置搜索文件插件FZF快捷键
+map <C-p> :FZF<CR>
 
 " 设置相同单词一起改名插件multi_cursor
 let g:multi_cursor_next_key='<C-n>'
@@ -223,8 +213,8 @@ let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 
 " 设置保存快捷键
-map <C-s> :w<CR>
-imap <C-s> <C-o>:w<CR>
+map <leader>w :w<CR>
+imap <leader>w <C-o>:w<CR>
 
 " 设置保存退出快捷键
 nnoremap zz :wq<CR>
