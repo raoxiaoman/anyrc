@@ -263,7 +263,7 @@ nnoremap <F2> :bp<CR>
 nnoremap <F3> :bn<CR>
 
 " 设置搜索文件插件FZF快捷键
-map <C-p> :FZF<CR>
+map <leader>fz :FZF<CR>
 
 " 设置相同多光标控制插件multi_cursor
 let g:multi_cursor_next_key='<C-n>'
