@@ -9,13 +9,15 @@
 "别人笑我忒疯癫，我笑自己命太贱；
 "不见满街漂亮妹，哪个归得程序员？
 
+
 "设置插件管理
 ""需要先安装插件vim-plug
 "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
-"功能：在当前目录下所有文件的内容查找目标单词
+"功能：在当前目录下所有文件的内容中查找目标单词,
+"需先安装ag(sudo apt-get install silversearcher-ag),快捷键：ctrl+f
 Plug 'dyng/ctrlsf.vim'
-"功能：在当前目录查找目标文件
+"功能：在当前目录查找目标文件,快捷键ctrl+p
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "功能：vim主题
 Plug 'dracula/vim'
@@ -23,9 +25,9 @@ Plug 'tomasr/molokai'
 "功能：状态栏和标签页,主题
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"功能：代码补全以及代码函数跳转
+"功能：代码补全以及代码函数跳转,快捷键：ctrl+b
 Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer' }
-"功能：生成YouCompleteMe的配置文件
+"功能：生成YouCompleteMe的配置文件,用法：config_gen.py .
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 "功能：git修改显示
 Plug 'mhinz/vim-signify'
@@ -33,39 +35,34 @@ Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 "功能：vim里面使用GNU GLOBAL，需要先安装GNU GLOBAL(https://www.gnu.org/software/global/)
 Plug 'aceofall/gtags.vim'
-"功能：代码格式化
-Plug 'Chiel92/vim-autoformat'
-"功能: 代码块补全引擎
+"功能: 代码块补全引擎,快捷键：<leader><Tab>
 Plug 'SirVer/ultisnips'
 "功能：代码块集合
 Plug 'honza/vim-snippets'
 "功能：文本对齐
 Plug 'junegunn/vim-easy-align'
-"功能：代码自动缩进
-Plug 'nathanaelkane/vim-indent-guides'
-"功能：代码注释
+"功能：代码注释,快捷键：<Leader>c<space>
 Plug 'scrooloose/nerdcommenter'
 "功能：代码错误提示异步
 Plug 'w0rp/ale'
-"功能：列出当前代码的函数树,需要安装ctags(sudo apt-get install ctags)
+"功能：列出当前代码的函数树,需要安装ctags(sudo apt-get install ctags),快捷键：<F5>
 Plug 'majutsushi/tagbar'
-"功能：列出当前路径的目录树
+"功能：列出当前路径的目录树,快捷键：<leader>l
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-"功能：光标跳转（匹配两个字符）
+"功能：光标跳转（匹配两个字符）,快捷键：s
 Plug 'justinmk/vim-sneak'
-"功能：光标跳转（匹配所有字符）
+"功能：光标跳转（匹配所有字符）,快捷键：/
 Plug 'easymotion/vim-easymotion'
-"功能：在当前目录查找目标文件
-Plug 'rking/ag.vim'
-"功能：多光标选中
+"功能：多光标选中,快捷键：ctrl+n
 Plug 'terryma/vim-multiple-cursors'
-"功能：c++函数定义自动生成函数实现
+"功能：c++函数定义自动生成函数实现,快捷键：<leader>PP
 Plug 'derekwyatt/vim-protodef'
-"功能：c++在.h和.cpp文件间跳转
 Plug 'derekwyatt/vim-fswitch'
+"功能：c++在.h和.cpp文件间跳转,用法：命令模式输入命令A
+Plug 'vim-scripts/a.vim'
 "功能：各种配对符号自动补全
 Plug 'jiangmiao/auto-pairs'
-"功能：异步命令
+"功能：异步命令,快捷键：<leader>ar
 Plug 'skywind3000/asyncrun.vim'
 call plug#end()
 
@@ -83,14 +80,19 @@ set expandtab
 set tabstop=4
 " 设置格式化时制表符占用空格数
 set shiftwidth=4
+" 根据Python语言的建议（将tab展成四个空格）进行了专门设置
+autocmd FileType python setlocal et sta sw=4 sts=4
 " 让vim 把连续数量的空格视为一个制表符
 set softtabstop=4
+" 解决插入模式下delete/backspce键失效问题
 set backspace=2
 "设置关闭兼容模式
 set nocompatible
 "设置命令模式补全列表
 set wildmenu
-"set wildmode=list:full
+"设置vim切换buffer(文件/tab)后仍然保留undo,
+"不用保存后才能打开新的buf
+set hidden
 
 " 设主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
@@ -115,35 +117,33 @@ map <leader>nb :hi Normal ctermfg=white ctermbg=black<CR>
 "让配置立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
-" 设置代码大括号间联系插件indent_guides
-" 随 vim 自启动
-let g:indent_guides_enable_on_vim_startup=1
-" 从第二层开始可视化显示缩进
-let g:indent_guides_start_level=2
-" 色块宽度
-let g:indent_guides_guide_size=1
-" 快捷键i开/关缩进可视化
-nmap <silent> <Leader>i <Plug>IndentGuidesToggle
-
 " ESC不方便,设置fd快捷键代替
 "imap <C-I> <Esc>
 inoremap fd <Esc>
+
+" 设置保存快捷键
+map <leader>w :w<CR>
+imap <leader>w <C-o>:w<CR>
+
+" 设置保存退出快捷键
+nnoremap zz :wq<CR>
 
 "设置模板补全插件UltiSnips
 "tab 键与 YCM 冲突，重新设定
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
-let g:UltiSnipsSnippetDirectories=["~/.vim/mysnippets"]
+let g:UltiSnipsSnippetDirectories=["~/.vim/plugged/vim-snippets/UltiSnips/"]
 
 "设置YouCompleteMe代码补全和跳转插件
 if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     " YCM 补全菜单配色
-    "选中项
-    nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
     highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
     let g:ycm_global_ycm_extra_conf = '/home/raohui/.ycm_extra_conf.py'
-    inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项"
+    "回车即选中当前项
+    inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"    
+    "设置跳转快捷键
+    nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
     nnoremap <C-b> :YcmCompleter GoTo <CR>
     " 补全功能在注释中同样有效
     let g:ycm_complete_in_comments=1
@@ -189,7 +189,10 @@ let NERDTreeAutoDeleteBuffer=1
 
 " 使用 ctrlsf.vim插件在工程内全局查找光标所在关键字，设置快捷键。
 let g:ctrlsf_ackprg = 'ag'
-nnoremap <C-f> :CtrlSF
+nnoremap <C-f> :CtrlSF<SPACE>
+
+"配置asyncrun的快捷键
+nnoremap <leader>ar :AsyncRun<SPACE>
 
 "设置标签生成插件gtags.vim 设置项
 let GtagsCscope_Auto_Load = 1
@@ -218,7 +221,7 @@ function! FindFiles(pat, ...)
     call append(line('$'), split(globpath(path, a:pat), '\n'))
     echo 'finding...done!'
     redraw
-endfunc
+endfunction
 
 function! VimEnterCallback()
     for f in argv()
@@ -228,7 +231,7 @@ function! VimEnterCallback()
 
         call FindGtags(f)
     endfor
-endfunc
+endfunction
 
 function! FindGtags(f)
     let dir = fnamemodify(a:f, ':p:h')
@@ -243,24 +246,21 @@ function! FindGtags(f)
 
         let dir = fnamemodify(dir, ":h")
     endwhile
-endfunc
+endfunction
 
 function! UpdateGtags(f)
     let dir = fnamemodify(a:f, ':p:h')
     exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
 endfunction
 
-"设置格式化插件autofarmat
-noremap <F4> :Autoformat<CR>
-let g:autoformat_verbosemode=1
-
 "设置vim_airline
 let g:airline#extensions#tabline#enabled = 1
+"let g:airline_powerline_fonts = 1  
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 "设置切换Buffer快捷键"
-nnoremap <F2> :bn<CR>
-nnoremap <F3> :bp<CR>
+nnoremap <F2> :bp<CR>
+nnoremap <F3> :bn<CR>
 
 " 设置搜索文件插件FZF快捷键
 map <C-p> :FZF<CR>
@@ -271,13 +271,11 @@ let g:multi_cursor_prev_key='<C-j>'
 let g:multi_cursor_skip_key='<C-k>'
 let g:multi_cursor_quit_key='<Esc>'
 
-"设置由借口快速生成实现框架插件pullproto
+"设置由借口快速生成实现框架插件pullproto(快捷键<leader>PP,<leader>PN)
 " 成员函数的实现顺序与声明顺序一致
 let g:disable_protodef_sorting=1
 " 设置 pullproto.pl 脚本路径
 let g:protodefprotogetter='~/.vim/plugged/vim-protodef/pullproto.pl'
-" 成员函数的实现顺序与声明顺序一致
-let g:disable_protodef_sorting=1
 
 " 设置代码检查ale
 set nocompatible
@@ -287,13 +285,6 @@ filetype plugin on
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
-
-" 设置保存快捷键
-map <leader>w :w<CR>
-imap <leader>w <C-o>:w<CR>
-
-" 设置保存退出快捷键
-nnoremap zz :wq<CR>
 
 " 设置function视图插件tagbar的信息
 " 设置 tagbar 子窗口的位置出现在主编辑区的右边
