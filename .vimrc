@@ -14,7 +14,7 @@
 "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
 "功能：在当前目录下所有文件的内容查找目标单词
-Plug 'dyng/ctrlsf.vim' 
+Plug 'dyng/ctrlsf.vim'
 "功能：在当前目录查找目标文件
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "功能：vim主题
@@ -31,7 +31,7 @@ Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'mhinz/vim-signify'
 "功能：vim里面使用git
 Plug 'tpope/vim-fugitive'
-"功能：代码函数跳转
+"功能：vim里面使用GNU GLOBAL，需要先安装GNU GLOBAL(https://www.gnu.org/software/global/)
 Plug 'aceofall/gtags.vim'
 "功能：代码格式化
 Plug 'Chiel92/vim-autoformat'
@@ -47,7 +47,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'scrooloose/nerdcommenter'
 "功能：代码错误提示异步
 Plug 'w0rp/ale'
-"功能：列出当前代码的函数树
+"功能：列出当前代码的函数树,需要安装ctags(sudo apt-get install ctags)
 Plug 'majutsushi/tagbar'
 "功能：列出当前路径的目录树
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -65,6 +65,8 @@ Plug 'derekwyatt/vim-protodef'
 Plug 'derekwyatt/vim-fswitch'
 "功能：各种配对符号自动补全
 Plug 'jiangmiao/auto-pairs'
+"功能：异步命令
+Plug 'skywind3000/asyncrun.vim'
 call plug#end()
 
 "设置编码
@@ -195,6 +197,58 @@ let CtagsCscope_Auto_Map = 1
 let GtagsCscope_Quiet = 1
 set cscopetag " 使用 cscope 作为 tags 命令
 set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
+set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
+command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
+au VimEnter * call VimEnterCallback()
+au BufAdd *.[ch] call FindGtags(expand('<afile>'))
+au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
+
+function! FindFiles(pat, ...)
+    let path = ''
+    for str in a:000
+        let path .= str . ','
+    endfor
+
+    if path == ''
+        let path = &path
+    endif
+
+    echo 'finding...'
+    redraw
+    call append(line('$'), split(globpath(path, a:pat), '\n'))
+    echo 'finding...done!'
+    redraw
+endfunc
+
+function! VimEnterCallback()
+    for f in argv()
+        if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h'
+            continue
+        endif
+
+        call FindGtags(f)
+    endfor
+endfunc
+
+function! FindGtags(f)
+    let dir = fnamemodify(a:f, ':p:h')
+    while 1
+        let tmp = dir . '/GTAGS'
+        if filereadable(tmp)
+            exe 'cs add ' . tmp . ' ' . dir
+            break
+        elseif dir == '/'
+            break
+        endif
+
+        let dir = fnamemodify(dir, ":h")
+    endwhile
+endfunc
+
+function! UpdateGtags(f)
+    let dir = fnamemodify(a:f, ':p:h')
+    exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
+endfunction
 
 "设置格式化插件autofarmat
 noremap <F4> :Autoformat<CR>
@@ -285,4 +339,17 @@ let g:tagbar_type_cpp = {
             \ }
             \ }
 
-
+"设置开关quickfix窗口
+nnoremap <leader>q :call QuickfixToggle()<cr>
+let g:quickfix_is_open = 0
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+        execute g:quickfix_return_to_window . "wincmd w"
+    else
+        let g:quickfix_return_to_window = winnr()
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
