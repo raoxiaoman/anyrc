@@ -13,7 +13,7 @@
 if has("multi_byte") 
     " UTF-8 编码 
     set encoding=utf-8 
-    set termencoding=utf-8 
+    set termencoding=utf-8
     set formatoptions+=mM 
     set fencs=utf-8,gbk 
     if v:lang =~? '^/(zh/)/|/(ja/)/|/(ko/)' 
@@ -27,12 +27,37 @@ if has("multi_byte")
 else 
     echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte" 
 endif
-"解决consle提示信息输出乱码
-language messages zh_CN.utf-8
 
-"设置编码
-set encoding=utf-8
+"设置youcompleteme,需要下载韦易笑大神编译好的
+set runtimepath+=D:\YouCompleteMe
+" YCM 补全菜单配色
+highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
+let g:ycm_global_ycm_extra_conf = 'C:\Users\Administrator.OEUZ9I7DHOU3LM9\.vim\.ycm_extra_conf.py'
+let g:ycm_path_to_python_interpreter = 'D:\Python27\python.exe'
+"回车即选中当前项
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"    
+"设置跳转快捷键
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+nnoremap <C-b> :YcmCompleter GoTo <CR>
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+" 允许 vim 加载 .ycm_extra_conf.py 文件
+let g:ycm_confirm_extra_conf=0
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+" YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+inoremap <leader>; <C-x><C-o>
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_key_invoke_completion = '<C-a>'
+
 "设置行号
+set number
+"设置自动缩进
 set smartindent
 " 自适应不同语言的智能缩进
 filetype indent on
@@ -59,10 +84,8 @@ set hidden
 set guifont=Courier_New:h12:cANSI
 " 设置leader键
 let mapleader=","
-
 "让配置立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
-
 " ESC不方便,设置fd快捷键代替
 "imap <C-I> <Esc>
 inoremap fd <Esc>
@@ -121,7 +144,6 @@ call vundle#end()
 filetype plugin indent on
 
 " 设置主题颜色为molokai
-set nu!
 syntax enable 
 syntax on
 colorscheme molokai
@@ -142,8 +164,7 @@ map N <Plug>(easymotion-prev)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
-" 设置文件视图插件NERDTReeToggle
-" 快捷键
+" 设置文件视图插件NERDTReeToggle快捷键
 map <leader>l :NERDTreeToggle<CR>
 " 设置NERDTree子窗口宽度
 let NERDTreeWinSize=35
@@ -244,7 +265,3 @@ let g:tagbar_type_cpp = {
             \ 'union'     : 'u'
             \ }
             \ }
-
-"设置行号
-set number
-
