@@ -29,11 +29,11 @@ else
 endif
 
 "设置youcompleteme,需要下载韦易笑大神编译好的
-set runtimepath+=D:\YouCompleteMe
+set runtimepath+=D:/YouCompleteMe
 " YCM 补全菜单配色
 highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
-let g:ycm_global_ycm_extra_conf = 'C:\Users\Administrator.OEUZ9I7DHOU3LM9\.vim\.ycm_extra_conf.py'
-let g:ycm_path_to_python_interpreter = 'D:\Python27\python.exe'
+let g:ycm_global_ycm_extra_conf = 'C:/Users/Administrator.OEUZ9I7DHOU3LM9/.vim/.ycm_extra_conf_windows.py'
+let g:ycm_path_to_python_interpreter = 'D:/Python27/python.exe'
 "回车即选中当前项
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"    
 "设置跳转快捷键
@@ -98,7 +98,7 @@ imap <leader>w <C-o>:w<CR>
 nnoremap zz :wq<CR>
 
 "设置插件管理,需要配置vim路径的环境变量
-set rtp+=$VIM\vimfiles\bundle\Vundle.vim
+set rtp+=$VIM/vimfiles/bundle/Vundle.vim
 call vundle#begin()
 "let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -153,7 +153,7 @@ colorscheme molokai
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
-let g:UltiSnipsSnippetDirectories=["C:\Users\Administrator.OEUZ9I7DHOU3LM9\.vim\bundle\vim-snippets\UltiSnips"]
+let g:UltiSnipsSnippetDirectories=["C:/Users/Administrator.OEUZ9I7DHOU3LM9/.vim/bundle/vim-snippets/UltiSnips"]
 
 " 设置文件中光标快速移动插件EasyMotion
 let g:EasyMotion_do_mapping = 0
@@ -196,12 +196,12 @@ let g:multi_cursor_quit_key='<Esc>'
 " 成员函数的实现顺序与声明顺序一致
 let g:disable_protodef_sorting=1
 " 设置 pullproto.pl 脚本路径
-let g:protodefprotogetter='C:\Users\Administrator.OEUZ9I7DHOU3LM9\.vim\bundle\vim-protodef\pullproto.pl'
+let g:protodefprotogetter='C:/Users/Administrator.OEUZ9I7DHOU3LM9/.vim/bundle/vim-protodef/pullproto.pl'
 
 " 设置代码检查ale
 set nocompatible
 filetype off
-let &runtimepath.='C:\Users\Administrator.OEUZ9I7DHOU3LM9\.vim\bundle\ale'
+let &runtimepath.='C:/Users/Administrator.OEUZ9I7DHOU3LM9/.vim/bundle/ale'
 filetype plugin on
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '>>'
