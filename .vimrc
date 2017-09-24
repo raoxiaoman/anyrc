@@ -95,7 +95,7 @@ set wildmenu
 set hidden
 
 "设置编译当前的cpp文件
-noremap <F7> :AsyncRun g++ "%" -o "%<" 
+noremap <F7> :AsyncRun g++ "%" -o "%<" <cr>
 
 " 设主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
