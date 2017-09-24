@@ -94,6 +94,9 @@ set wildmenu
 "不用保存后才能打开新的buf
 set hidden
 
+"设置编译当前的cpp文件
+noremap <F7> :AsyncRun g++ "%" -o "%<" 
+
 " 设主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
     syntax on
@@ -259,8 +262,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 "设置切换Buffer快捷键"
-nnoremap <F2> :bp<CR>
-nnoremap <F3> :bn<CR>
+nnoremap <F3> :bp<CR>
+nnoremap <F4> :bn<CR>
 
 " 设置搜索文件插件FZF快捷键
 map <leader>fz :FZF<CR>
