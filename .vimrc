@@ -93,6 +93,10 @@ set wildmenu
 "设置vim切换buffer(文件/tab)后仍然保留undo,
 "不用保存后才能打开新的buf
 set hidden
+"设置高亮
+syntax enable
+syntax on
+set hlsearch
 
 "设置编译当前的cpp文件
 noremap <F7> :AsyncRun g++ "%" -o "%<" <cr>
@@ -206,7 +210,7 @@ set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
 set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
 command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
 au VimEnter * call VimEnterCallback()
-au BufAdd *.[ch] call FindGtags(expand('<afile>'))
+"au BufAdd *.[ch] call FindGtags(expand('<afile>'))
 au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
 
 function! FindFiles(pat, ...)
