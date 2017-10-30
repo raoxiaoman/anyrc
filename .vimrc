@@ -351,3 +351,5 @@ function! QuickfixToggle()
         let g:quickfix_is_open = 1
     endif
 endfunction
+
+nnoremap <leader>num :%s/^/\=line('.').'. '/ <cr>
