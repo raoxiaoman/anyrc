@@ -352,4 +352,4 @@ function! QuickfixToggle()
     endif
 endfunction
 
-nnoremap <leader>num :%s/^/\=line('.').'. '/ <cr>
+nnoremap <leader><leader>n :'<,'>s/^/\=line(".") - line("'<") + 1.".\t"/  <cr>
