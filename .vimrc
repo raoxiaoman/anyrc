@@ -64,6 +64,12 @@ Plug 'vim-scripts/a.vim'
 Plug 'jiangmiao/auto-pairs'
 "功能：异步命令,快捷键：<leader>ar
 Plug 'skywind3000/asyncrun.vim'
+"功能：MarkDown文档编辑
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+"功能：MarkDown文档预览
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.vim'
 call plug#end()
 
 "设置编码
@@ -352,4 +358,24 @@ function! QuickfixToggle()
     endif
 endfunction
 
+"设置快速标号
 nnoremap <leader><leader>n :'<,'>s/^/\=line(".") - line("'<") + 1.".\t"/  <cr>
+
+"设置MarkDown文档静止折叠
+let g:vim_markdown_folding_disabled = 1
+"设置MarkDown插件的文件关联
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
+"设置MarkDown文档pyhon-mode主题
+let g:vim_markdown_folding_style_pythonic = 1
+" 设置支持yaml语法
+let g:vim_markdown_frontmatter=1 
+
+"设置MarkDown文档预览快捷键
+"普通模式
+nmap <silent> <F8> <Plug>MarkdownPreview        
+"插入模式
+imap <silent> <F8> <Plug>MarkdownPreview         
+"普通模式
+nmap <silent> <F9> <Plug>StopMarkdownPreview    
+"插入模式
+imap <silent> <F9> <Plug>StopMarkdownPreview    
