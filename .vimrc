@@ -297,7 +297,11 @@ let &runtimepath.=',~/.vim/plugged/ale/'
 filetype plugin on
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
+let g:ale_sign_warning = 'w'
+let g:airline#extensions#ale#enabled = 1
+let g:ale_linters = { 'cpp': ['g++'],'c': ['gcc']}
+let g:ale_cpp_gcc_options='-std=c++11 -Wall -Wextra'
+let g:ale_c_gcc_options='-std=c++11 -Wall -Wextra'
 
 " 设置function视图插件tagbar的信息
 " 设置 tagbar 子窗口的位置出现在主编辑区的右边
