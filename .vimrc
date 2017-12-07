@@ -115,7 +115,6 @@ if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
     colorscheme dracula
     hi Normal ctermfg=white ctermbg=black
 endif
-
 " 设置主题颜色为molokai
 "let g:rehash256 = 1
 "colorscheme molokai
@@ -272,16 +271,16 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 "设置切换Buffer快捷键"
-nnoremap <F3> :bp<CR>
-nnoremap <F4> :bn<CR>
+nnoremap <C-j> :bn<CR>
+nnoremap <C-k> :bp<CR>
 
 " 设置搜索文件插件FZF快捷键
 map <leader>fz :FZF<CR>
 
 " 设置相同多光标控制插件multi_cursor
 let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-j>'
-let g:multi_cursor_skip_key='<C-k>'
+let g:multi_cursor_prev_key='<C-m>'
+let g:multi_cursor_skip_key='<A-k>'
 let g:multi_cursor_quit_key='<Esc>'
 
 "设置由借口快速生成实现框架插件pullproto(快捷键<leader>PP,<leader>PN)
