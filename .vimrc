@@ -70,6 +70,8 @@ Plug 'plasticboy/vim-markdown'
 "功能：MarkDown文档预览
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
+"功能：函数补全的同时添加参数
+Plug 'tenfyzhong/CompleteParameter.vim'
 call plug#end()
 
 "设置编码
@@ -103,6 +105,16 @@ set hidden
 syntax enable
 syntax on
 set hlsearch
+
+"设置alt映射问题
+let c='a'
+while c <= 'z'
+  exec "set <A-".c.">=\e".c
+  exec "imap \e".c." <A-".c.">"
+  let c = nr2char(1+char2nr(c))
+endw
+
+set timeout ttimeoutlen=50
 
 "设置编译当前的cpp文件
 noremap <F7> :AsyncRun g++ "%" -o "%<" <cr>
@@ -280,7 +292,7 @@ map <leader>fz :FZF<CR>
 " 设置相同多光标控制插件multi_cursor
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-m>'
-let g:multi_cursor_skip_key='<A-k>'
+let g:multi_cursor_skip_key='<M-k>'
 let g:multi_cursor_quit_key='<Esc>'
 
 "设置由借口快速生成实现框架插件pullproto(快捷键<leader>PP,<leader>PN)
@@ -382,3 +394,22 @@ imap <silent> <F8> <Plug>MarkdownPreview
 nmap <silent> <F9> <Plug>StopMarkdownPreview    
 "插入模式
 imap <silent> <F9> <Plug>StopMarkdownPreview    
+
+"设置CompleteParameter
+inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+
+"设置auto-pair的匹配符号
+let g:AutoPairs = {'<':'>', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'} 
+
+"设置alt键不能映射的问题
+let c='a'
+while c <= 'z'
+  exec "set <A-".c.">=\e".c
+  exec "imap \e".c." <A-".c.">"
+  let c = nr2char(1+char2nr(c))
+endw
+set timeout ttimeoutlen=50
