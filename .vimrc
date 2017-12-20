@@ -403,7 +403,7 @@ smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
 imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
 
 "设置auto-pair的匹配符号
-let g:AutoPairs = {'<':'>', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'} 
+let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`'} 
 
 "设置alt键不能映射的问题
 let c='a'
