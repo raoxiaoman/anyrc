@@ -104,7 +104,7 @@ set hidden
 "设置高亮
 syntax enable
 syntax on
-set hlsearch
+"set hlsearch
 
 "设置alt映射问题
 let c='a'
@@ -157,7 +157,6 @@ nnoremap zz :wq<CR>
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
-let g:UltiSnipsSnippetDirectories=["~/.vim/plugged/vim-snippets/UltiSnips/"]
 
 "设置YouCompleteMe代码补全和跳转插件
 if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
