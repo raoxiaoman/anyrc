@@ -1,5 +1,9 @@
 "佛祖保佑 永无BUG
-"佛曰: "写字楼里写字间，写字间里程序员； "程序人员写程序，又拿程序换酒钱。 "酒醒只在网上坐，酒醉还来网下眠； "酒醉酒醒日复日，网上网下年复年。 "但愿老死电脑间，不愿鞠躬老板前；
+"佛曰: "写字楼里写字间，写字间里程序员； 
+"程序人员写程序，又拿程序换酒钱。 
+"酒醒只在网上坐，酒醉还来网下眠； 
+"酒醉酒醒日复日，网上网下年复年。 
+"但愿老死电脑间，不愿鞠躬老板前；
 "奔驰宝马贵者趣，公交自行程序员。
 "别人笑我忒疯癫，我笑自己命太贱；
 "不见满街漂亮妹，哪个归得程序员？
@@ -103,15 +107,8 @@ set hidden
 "设置高亮
 syntax enable
 syntax on
+"设置搜索高亮
 "set hlsearch
-
-"设置alt映射问题
-let c='a'
-while c <= 'z'
-  exec "set <A-".c.">=\e".c
-  exec "imap \e".c." <A-".c.">"
-  let c = nr2char(1+char2nr(c))
-endw
 
 set timeout ttimeoutlen=50
 
@@ -186,9 +183,9 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     let g:ycm_key_invoke_completion = '<C-a>'
     " 添加自动语法补全促发
     let g:ycm_semantic_triggers =  {
-			\ 'c,cpp,python,go,erlang,perl': ['re!\w{2}'],
-			\ 'cs,lua,javascript': ['re!\w{2}'],
-			\ }
+                \ 'c,cpp,python,go,erlang,perl': ['re!\w{2}'],
+                \ 'cs,lua,javascript': ['re!\w{2}'],
+                \ }
 endif
 
 " 设置文件中光标快速移动插件EasyMotion
@@ -287,7 +284,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 
 "设置切换Buffer快捷键"
 nnoremap <C-j> :bn<CR>
-nnoremap <C-k> :bp<CR>
+noremap <C-k> :bp<CR>
 
 " 设置搜索文件插件FZF快捷键
 map <leader>fz :FZF<CR>
@@ -411,9 +408,9 @@ let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 "设置alt键不能映射的问题
 let c='a'
 while c <= 'z'
-  exec "set <A-".c.">=\e".c
-  exec "imap \e".c." <A-".c.">"
-  let c = nr2char(1+char2nr(c))
+    exec "set <A-".c.">=\e".c
+    exec "imap \e".c." <A-".c.">"
+    let c = nr2char(1+char2nr(c))
 endw
 set timeout ttimeoutlen=50
 
