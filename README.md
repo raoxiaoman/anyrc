@@ -1,1 +1,1 @@
-# vimrc
+# for anyrc
