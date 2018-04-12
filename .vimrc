@@ -109,6 +109,8 @@ syntax enable
 syntax on
 "设置搜索高亮
 "set hlsearch
+"设置鼠标模式
+set mouse=a
 
 set timeout ttimeoutlen=50
 
