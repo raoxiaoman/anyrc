@@ -72,6 +72,10 @@ Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
 "功能：函数补全的同时添加参数
 Plug 'tenfyzhong/CompleteParameter.vim'
+"功能：java代码补全
+Plug 'artur-shaik/vim-javacomplete2'
+"功能：中文输入法问题
+Plug 'vim-scripts/fcitx.vim'
 call plug#end()
 
 "设置编码
@@ -185,6 +189,11 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     " 语法关键字补全
     let g:ycm_seed_identifiers_with_syntax=1
     let g:ycm_key_invoke_completion = '<C-a>'
+    " 添加自动语法补全促发
+    let g:ycm_semantic_triggers =  {
+			\ 'c,cpp,python,go,erlang,perl': ['re!\w{2}'],
+			\ 'cs,lua,javascript': ['re!\w{2}'],
+			\ }
 endif
 
 " 设置文件中光标快速移动插件EasyMotion
@@ -317,7 +326,7 @@ let g:ale_c_gcc_options='-std=c++11 -Wall -Wextra'
 " 设置 tagbar 子窗口的位置出现在主编辑区的右边
 let tagbar_right=1
 " 设置显示／隐藏标签列表子窗口的快捷键。
-nnoremap <F5> :TagbarToggle<CR>
+nnoremap <C-l> :TagbarToggle<CR>
 " 设置标签子窗口的宽度
 let tagbar_width=32
 " tagbar 子窗口中不显示冗余帮助信息
@@ -412,3 +421,18 @@ while c <= 'z'
   let c = nr2char(1+char2nr(c))
 endw
 set timeout ttimeoutlen=50
+
+"设置javacomplete2
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+nmap <F5> <Plug>(JavaComplete-Imports-Add)
+imap <F5> <Plug>(JavaComplete-Imports-Add)
+nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+
+"配置eclim
+let g:EclimCompletionMethod = 'omnifunc'
+
