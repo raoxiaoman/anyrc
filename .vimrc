@@ -23,8 +23,7 @@ Plug 'dracula/vim'
 Plug 'tomasr/molokai'
 "功能：状态栏和标签页,主题
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-"功能：代码补全以及代码函数跳转,快捷键：ctrl+b
+Plug 'vim-airline/vim-airline-themes' "功能：代码补全以及代码函数跳转,快捷键：ctrl+b
 Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer' }
 "功能：生成YouCompleteMe的配置文件,用法：config_gen.py .
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
@@ -432,6 +431,7 @@ let g:EclimCompletionMethod = 'omnifunc'
 
 
 "设置在vim打开terminal窗口
-nnoremap <leader>vt :vertical terminal<CR>
-nnoremap <leader>t :terminal<CR>
-tnoremap <leader>wc <C-W><C-c>
+nnoremap <leader>vt :vertical terminal++close<CR>
+nnoremap <leader>t :terminal++close<CR>
+tnoremap <leader>wc  <C-W><C-c> 
+
