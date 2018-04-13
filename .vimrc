@@ -379,13 +379,13 @@ endfunction
 nnoremap <leader><leader>n :'<,'>s/^/\=line(".") - line("'<") + 1.".\t"/  <cr>
 
 "设置MarkDown文档静止折叠
-let g:vim_markdown_folding_disabled = 1
+"let g:vim_markdown_folding_disabled = 1
 "设置MarkDown插件的文件关联
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
 "设置MarkDown文档pyhon-mode主题
-let g:vim_markdown_folding_style_pythonic = 1
+"let g:vim_markdown_folding_style_pythonic = 1
 " 设置支持yaml语法
-let g:vim_markdown_frontmatter=1 
+"let g:vim_markdown_frontmatter=1 
 
 "设置MarkDown文档预览快捷键
 "普通模式
@@ -430,3 +430,8 @@ imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 "配置eclim
 let g:EclimCompletionMethod = 'omnifunc'
 
+
+"设置在vim打开terminal窗口
+nnoremap <leader>vt :vertical terminal<CR>
+nnoremap <leader>t :terminal<CR>
+tnoremap <leader>wc <C-W><C-c>
