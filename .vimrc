@@ -124,16 +124,32 @@ set timeout ttimeoutlen=50
 let g:asyncrun_open = 6
 " 任务结束时候响铃提醒
 let g:asyncrun_bell = 1
+let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
+function! Build_java ()
+    let cwd = fnamemodify('.', ':p')
+    "echo cwd
+    let cwd_out = cwd . "out/"
+    "echo cwd_out
+    if !isdirectory(cwd_out)
+        call mkdir(cwd_out,"p")
+        :AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
+    else
+        :AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
+    endif
+endfunction
 " 设置 F10 打开/关闭 Quickfix 窗口
 nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
-nnoremap <silent> <F9> :AsyncRun g++ -Wall -std=c++11 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F9> :AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
+nnoremap <silent> <F7> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
 nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
-nnoremap <silent> <F7> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
-" 设主题颜色为dracula
+"nnoremap <silent> <S-F9> :AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" <cr>
+nnoremap <silent> <S-F9> :call Build_java() <cr>
+nnoremap <silent> <S-F5> :AsyncRun -raw java -classpath "$(VIM_FILEDIR)/out/" "$(VIM_FILENOEXT)" <cr>
+
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
     syntax on
     set t_Co=256
