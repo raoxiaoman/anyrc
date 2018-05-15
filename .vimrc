@@ -62,7 +62,7 @@ Plug 'derekwyatt/vim-fswitch'
 Plug 'vim-scripts/a.vim'
 "功能：各种配对符号自动补全
 Plug 'jiangmiao/auto-pairs'
-"功能：异步命令,快捷键：<leader>ar
+"功能：异步命令
 Plug 'skywind3000/asyncrun.vim'
 "功能：MarkDown文档编辑
 "Plug 'godlygeek/tabular'
@@ -132,7 +132,6 @@ nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
 nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
 nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
 nnoremap <silent> <F7> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-
 
 " 设主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
@@ -264,7 +263,7 @@ nnoremap <C-j> :bn<CR>
 noremap <C-k> :bp<CR>
 
 " 设置搜索文件插件FZF快捷键
-map <leader>fz :FZF<CR>
+"map <leader>fz :FZF<CR>
 
 " 设置相同多光标控制插件multi_cursor
 let g:multi_cursor_next_key='<C-n>'
@@ -379,7 +378,7 @@ endif
 "设置LeaderF
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<m-n>'
-noremap <c-n> :LeaderfMru<cr>
+noremap <leader>lm :LeaderfMru<cr>
 noremap <leader>lf :LeaderfFunction!<cr>
 noremap <leader>lb :LeaderfBuffer<cr>
 noremap <leader>lt :LeaderfTag<cr>
