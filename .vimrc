@@ -131,7 +131,7 @@ function! Build_java ()
     let cwd_out = cwd . "out/"
     "echo cwd_out
     if !isdirectory(cwd_out)
-        call mkdir(cwd_out,"p")
+        silent! call mkdir(cwd_out,"p")
         :AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
     else
         :AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
@@ -194,9 +194,9 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
     let g:ycm_global_ycm_extra_conf = '/home/raohui/.ycm_extra_conf.py'
     "回车即选中当前项
-    inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"    
+    inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"    
     "设置跳转快捷键
-    nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+    nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
     nnoremap <C-b> :YcmCompleter GoTo <CR>
     " 补全功能在注释中同样有效
     let g:ycm_complete_in_comments=1
@@ -205,11 +205,11 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     " 开启 YCM 标签补全引擎
     let g:ycm_collect_identifiers_from_tags_files=1
     " 引入 C++ 标准库tags
-    set tags+=/home/raohui/.vim/tags/stdcpp.tags
+    "set tags+=/home/raohui/.vim/tags/stdcpp.tags
     " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
-    inoremap <leader>; <C-x><C-o>
+    "inoremap <leader>; <C-x><C-o>
     " 补全内容不以分割子窗口形式出现，只显示补全列表
-    set completeopt-=preview
+    "set completeopt-=preview
     " 禁止缓存匹配项，每次都重新生成匹配项
     let g:ycm_cache_omnifunc=0
     " 语法关键字补全
@@ -342,7 +342,7 @@ imap <silent> <leader>smd <Plug>StopMarkdownPreview
 "imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
 
 "设置auto-pair的匹配符号
-let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`'} 
+let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '(':')' } 
 
 "设置alt键不能映射的问题
 "let c='a'
