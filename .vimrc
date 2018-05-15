@@ -15,9 +15,9 @@
 call plug#begin('~/.vim/plugged')
 "功能：在当前目录下所有文件的内容中查找目标单词,
 "需先安装ag(sudo apt-get install silversearcher-ag),快捷键：ctrl+f
-Plug 'dyng/ctrlsf.vim'
+Plug 'dyng/ctrlsf.vim',{'on': 'CtrlSF'}
 "功能：在当前目录查找目标文件,快捷键ctrl+p
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "功能：vim主题
 Plug 'dracula/vim'
 Plug 'tomasr/molokai'
@@ -32,7 +32,7 @@ Plug 'mhinz/vim-signify'
 "功能：vim里面使用git
 Plug 'tpope/vim-fugitive'
 "功能：vim里面使用GNU GLOBAL，需要先安装GNU GLOBAL(https://www.gnu.org/software/global/)
-Plug 'aceofall/gtags.vim'
+"Plug 'aceofall/gtags.vim'
 "功能: 代码块补全引擎,快捷键：<leader><Tab>
 Plug 'SirVer/ultisnips'
 "功能：代码块集合
@@ -44,8 +44,10 @@ Plug 'scrooloose/nerdcommenter'
 "功能：代码错误提示异步
 Plug 'w0rp/ale'
 "功能：列出当前代码的函数树,需要安装ctags(sudo apt-get install ctags),快捷键：<F5>
-Plug 'majutsushi/tagbar'
-"功能：列出当前路径的目录树,快捷键：<leader>l
+"Plug 'majutsushi/tagbar'
+"功能: 函数查找 目录当前文件查找 tag查找 buff查找
+Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+"功能：列出当前路径的目录树,快捷键：<c-l>
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 "功能：光标跳转（匹配两个字符）,快捷键：s
 Plug 'justinmk/vim-sneak'
@@ -74,6 +76,8 @@ Plug 'tenfyzhong/CompleteParameter.vim'
 Plug 'artur-shaik/vim-javacomplete2'
 "功能：中文输入法问题
 Plug 'vim-scripts/fcitx.vim'
+"功能: ctags自动生成
+Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 "设置编码
@@ -113,8 +117,19 @@ set mouse=a
 
 set timeout ttimeoutlen=50
 
-"设置编译当前的cpp文件
-noremap <F7> :AsyncRun g++ "%" -o "%<" <cr>
+" 自动打开 quickfix window ，高度为 6
+let g:asyncrun_open = 6
+" 任务结束时候响铃提醒
+let g:asyncrun_bell = 1
+" 设置 F10 打开/关闭 Quickfix 窗口
+nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+nnoremap <silent> <F9> :AsyncRun g++ -Wall -std=c++11 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
+nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
+nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
+nnoremap <silent> <F3> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+
 
 " 设主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
@@ -200,7 +215,7 @@ map <Leader>k <Plug>(easymotion-k)
 
 " 设置文件视图插件NERDTReeToggle
 " 快捷键
-map <leader>l :NERDTreeToggle<CR>
+map <c-l> :NERDTreeToggle<CR>
 " 设置NERDTree子窗口宽度
 let NERDTreeWinSize=35
 " 设置NERDTree子窗口位置
@@ -220,63 +235,16 @@ nnoremap <C-f> :CtrlSF<SPACE>
 nnoremap <leader>ar :AsyncRun<SPACE>
 
 "设置标签生成插件gtags.vim 设置项
-let GtagsCscope_Auto_Load = 1
-let CtagsCscope_Auto_Map = 1
-let GtagsCscope_Quiet = 1
-set cscopetag " 使用 cscope 作为 tags 命令
-set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
-set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
-command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
-au VimEnter * call VimEnterCallback()
-"au BufAdd *.[ch] call FindGtags(expand('<afile>'))
-au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-
-function! FindFiles(pat, ...)
-    let path = ''
-    for str in a:000
-        let path .= str . ','
-    endfor
-
-    if path == ''
-        let path = &path
-    endif
-
-    echo 'finding...'
-    redraw
-    call append(line('$'), split(globpath(path, a:pat), '\n'))
-    echo 'finding...done!'
-    redraw
-endfunction
-
-function! VimEnterCallback()
-    for f in argv()
-        if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h'
-            continue
-        endif
-
-        call FindGtags(f)
-    endfor
-endfunction
-
-function! FindGtags(f)
-    let dir = fnamemodify(a:f, ':p:h')
-    while 1
-        let tmp = dir . '/GTAGS'
-        if filereadable(tmp)
-            exe 'cs add ' . tmp . ' ' . dir
-            break
-        elseif dir == '/'
-            break
-        endif
-
-        let dir = fnamemodify(dir, ":h")
-    endwhile
-endfunction
-
-function! UpdateGtags(f)
-    let dir = fnamemodify(a:f, ':p:h')
-    exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
-endfunction
+"let GtagsCscope_Auto_Load = 1
+"let CtagsCscope_Auto_Map = 1
+"let GtagsCscope_Quiet = 1
+"set cscopetag " 使用 cscope 作为 tags 命令
+"set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
+"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
+"command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
+"au VimEnter * call VimEnterCallback()
+""au BufAdd *.[ch] call FindGtags(expand('<afile>'))
+"au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
 
 "设置vim_airline
 let g:airline#extensions#tabline#enabled = 1
@@ -308,71 +276,22 @@ filetype off
 let &runtimepath.=',~/.vim/plugged/ale/'
 filetype plugin on
 let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = 'w'
 let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = { 'cpp': ['g++'],'c': ['gcc']}
 let g:ale_cpp_gcc_options='-std=c++11 -Wall -Wextra'
 let g:ale_c_gcc_options='-std=c++11 -Wall -Wextra'
+"let g:ale_sign_error = "\ue009\ue009"
+hi! clear SpellBad
+hi! clear SpellCap
+hi! clear SpellRare
+hi! SpellBad gui=undercurl guisp=red
+hi! SpellCap gui=undercurl guisp=blue
+hi! SpellRare gui=undercurl guisp=magenta
 
-" 设置function视图插件tagbar的信息
-" 设置 tagbar 子窗口的位置出现在主编辑区的右边
-let tagbar_right=1
-" 设置显示／隐藏标签列表子窗口的快捷键。
-nnoremap <C-l> :TagbarToggle<CR>
-" 设置标签子窗口的宽度
-let tagbar_width=32
-" tagbar 子窗口中不显示冗余帮助信息
-let g:tagbar_compact=1
-" 设置 ctags 对哪些代码标识符生成标签
-let g:tagbar_type_cpp = {
-            \ 'kinds' : [
-            \ 'c:classes:0:1',
-            \ 'd:macros:0:1',
-            \ 'e:enumerators:0:0',
-            \ 'f:functions:0:1',
-            \ 'g:enumeration:0:1',
-            \ 'l:local:0:1',
-            \ 'm:members:0:1',
-            \ 'n:namespaces:0:1',
-            \ 'p:functions_prototypes:0:1',
-            \ 's:structs:0:1',
-            \ 't:typedefs:0:1',
-            \ 'u:unions:0:1',
-            \ 'v:global:0:1',
-            \ 'x:external:0:1'
-            \ ],
-            \ 'sro'        : '::',
-            \ 'kind2scope' : {
-            \ 'g' : 'enum',
-            \ 'n' : 'namespace',
-            \ 'c' : 'class',
-            \ 's' : 'struct',
-            \ 'u' : 'union'
-            \ },
-            \ 'scope2kind' : {
-            \ 'enum'      : 'g',
-            \ 'namespace' : 'n',
-            \ 'class'     : 'c',
-            \ 'struct'    : 's',
-            \ 'union'     : 'u'
-            \ }
-            \ }
-
-"设置开关quickfix窗口
-nnoremap <leader>q :call QuickfixToggle()<cr>
-let g:quickfix_is_open = 0
-function! QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-        execute g:quickfix_return_to_window . "wincmd w"
-    else
-        let g:quickfix_return_to_window = winnr()
-        copen
-        let g:quickfix_is_open = 1
-    endif
-endfunction
 
 "设置快速标号
 nnoremap <leader><leader>n :'<,'>s/^/\=line(".") - line("'<") + 1.".\t"/  <cr>
@@ -388,13 +307,13 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
 
 "设置MarkDown文档预览快捷键
 "普通模式
-nmap <silent> <F8> <Plug>MarkdownPreview        
-"插入模式
-imap <silent> <F8> <Plug>MarkdownPreview         
-"普通模式
-nmap <silent> <F9> <Plug>StopMarkdownPreview    
-"插入模式
-imap <silent> <F9> <Plug>StopMarkdownPreview    
+"nmap <silent> <F8> <Plug>MarkdownPreview        
+""插入模式
+"imap <silent> <F8> <Plug>MarkdownPreview         
+""普通模式
+"nmap <silent> <F9> <Plug>StopMarkdownPreview    
+""插入模式
+"imap <silent> <F9> <Plug>StopMarkdownPreview    
 
 "设置CompleteParameter
 inoremap <silent><expr> ( complete_parameter#pre_complete("()")
@@ -417,21 +336,65 @@ set timeout ttimeoutlen=50
 
 "设置javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-nmap <F5> <Plug>(JavaComplete-Imports-Add)
-imap <F5> <Plug>(JavaComplete-Imports-Add)
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-
-"配置eclim
-let g:EclimCompletionMethod = 'omnifunc'
+"nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+"imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+"nmap <F5> <Plug>(JavaComplete-Imports-Add)
+"imap <F5> <Plug>(JavaComplete-Imports-Add)
+"nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+"imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+"nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+"imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 
 
 "设置在vim打开terminal窗口
 nnoremap <leader>vt :vertical terminal++close<CR>
 nnoremap <leader>t :terminal++close<CR>
 tnoremap <leader>wc  <C-W><C-c> 
+
+
+" gutentags
+" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+
+" 配置 ctags 的参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" 检测 ~/.cache/tags 不存在就新建
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
+
+"设置LeaderF
+let g:Lf_ShortcutF = '<c-p>'
+let g:Lf_ShortcutB = '<m-n>'
+noremap <c-n> :LeaderfMru<cr>
+noremap <leader>lf :LeaderfFunction!<cr>
+noremap <leader>lb :LeaderfBuffer<cr>
+noremap <leader>lt :LeaderfTag<cr>
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_WindowHeight = 0.30
+let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_ShowRelativePath = 0
+let g:Lf_HideHelp = 1
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_PreviewResult = {'Function':0}
+let g:Lf_NormalMap = {
+	\ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+	\ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+	\ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+	\ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+	\ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+	\ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+	\ }
 
