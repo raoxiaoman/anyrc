@@ -71,7 +71,7 @@ Plug 'skywind3000/asyncrun.vim'
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
 "功能：函数补全的同时添加参数
-Plug 'tenfyzhong/CompleteParameter.vim'
+"Plug 'tenfyzhong/CompleteParameter.vim'
 "功能：java代码补全
 Plug 'artur-shaik/vim-javacomplete2'
 "功能：中文输入法问题
@@ -79,7 +79,7 @@ Plug 'vim-scripts/fcitx.vim'
 "功能: ctags自动生成
 Plug 'ludovicchabant/vim-gutentags'
 "功能: 函数参数提示
-"Plug 'Shougo/echodoc.vim'
+Plug 'Shougo/echodoc.vim'
 call plug#end()
 
 "设置编码
@@ -335,11 +335,11 @@ nmap <silent> <Leader>smd <Plug>StopMarkdownPreview
 imap <silent> <leader>smd <Plug>StopMarkdownPreview    
 
 "设置CompleteParameter
-inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
-imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+"inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+"smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+"imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+"smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+"imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
 
 "设置auto-pair的匹配符号
 let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`'} 
@@ -456,5 +456,5 @@ let g:Lf_NormalMap = {
             \ }
 
 set noshowmode
-"let g:echodoc#enable_at_startup = 1
+let g:echodoc#enable_at_startup = 1
 "set completeopt-=preview
