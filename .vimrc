@@ -78,6 +78,8 @@ Plug 'artur-shaik/vim-javacomplete2'
 Plug 'vim-scripts/fcitx.vim'
 "功能: ctags自动生成
 Plug 'ludovicchabant/vim-gutentags'
+"功能: 函数参数提示
+"Plug 'Shougo/echodoc.vim'
 call plug#end()
 
 "设置编码
@@ -114,7 +116,8 @@ syntax on
 "set hlsearch
 "设置鼠标模式
 set mouse=a
-
+"关闭默认模式提醒
+"set cmdheight=2
 set timeout ttimeoutlen=50
 
 " 自动打开 quickfix window ，高度为 6
@@ -128,7 +131,7 @@ nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_
 nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
 nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
 nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
-nnoremap <silent> <F3> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F7> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 
 " 设主题颜色为dracula
@@ -196,7 +199,15 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     let g:ycm_cache_omnifunc=0
     " 语法关键字补全
     let g:ycm_seed_identifiers_with_syntax=1
-    let g:ycm_key_invoke_completion = '<C-a>'
+    let g:ycm_key_invoke_completion = '<c-a>'
+    let g:ycm_add_preview_to_completeopt = 0
+    let g:ycm_show_diagnostics_ui = 0
+    let g:ycm_server_log_level = 'info'
+    let g:ycm_min_num_identifier_candidate_chars = 2
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
+    let g:ycm_complete_in_strings=1
+    set completeopt=menu,menuone
+    noremap <c-a> <NOP>
     " 添加自动语法补全促发
     let g:ycm_semantic_triggers =  {
                 \ 'c,cpp,python,go,erlang,perl': ['re!\w{2}'],
@@ -230,9 +241,6 @@ let NERDTreeAutoDeleteBuffer=1
 " 使用 ctrlsf.vim插件在工程内全局查找光标所在关键字，设置快捷键。
 let g:ctrlsf_ackprg = 'ag'
 nnoremap <C-f> :CtrlSF<SPACE>
-
-"配置asyncrun的快捷键
-nnoremap <leader>ar :AsyncRun<SPACE>
 
 "设置标签生成插件gtags.vim 设置项
 "let GtagsCscope_Auto_Load = 1
@@ -292,14 +300,13 @@ hi! SpellBad gui=undercurl guisp=red
 hi! SpellCap gui=undercurl guisp=blue
 hi! SpellRare gui=undercurl guisp=magenta
 
-
 "设置快速标号
 nnoremap <leader><leader>n :'<,'>s/^/\=line(".") - line("'<") + 1.".\t"/  <cr>
 
 "设置MarkDown文档静止折叠
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
 "let g:vim_markdown_folding_disabled = 1
 "设置MarkDown插件的文件关联
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
 "设置MarkDown文档pyhon-mode主题
 "let g:vim_markdown_folding_style_pythonic = 1
 " 设置支持yaml语法
@@ -307,13 +314,13 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
 
 "设置MarkDown文档预览快捷键
 "普通模式
-"nmap <silent> <F8> <Plug>MarkdownPreview        
-""插入模式
-"imap <silent> <F8> <Plug>MarkdownPreview         
-""普通模式
-"nmap <silent> <F9> <Plug>StopMarkdownPreview    
-""插入模式
-"imap <silent> <F9> <Plug>StopMarkdownPreview    
+nmap <silent> <leader>md <Plug>MarkdownPreview        
+"插入模式
+imap <silent> <leader>md <Plug>MarkdownPreview         
+"普通模式
+nmap <silent> <Leader>smd <Plug>StopMarkdownPreview    
+"插入模式
+imap <silent> <leader>smd <Plug>StopMarkdownPreview    
 
 "设置CompleteParameter
 inoremap <silent><expr> ( complete_parameter#pre_complete("()")
@@ -336,14 +343,14 @@ set timeout ttimeoutlen=50
 
 "设置javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-"nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-"imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-"nmap <F5> <Plug>(JavaComplete-Imports-Add)
-"imap <F5> <Plug>(JavaComplete-Imports-Add)
-"nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-"imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-"nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-"imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+nmap <leader>jis <Plug>(JavaComplete-Imports-AddSmart)
+imap <leader>jis <Plug>(JavaComplete-Imports-AddSmart)
+nmap <leader>ji <Plug>(JavaComplete-Imports-Add)
+imap <leader>ji <Plug>(JavaComplete-Imports-Add)
+nmap <leader>jim <Plug>(JavaComplete-Imports-AddMissing)
+imap <leader>jim <Plug>(JavaComplete-Imports-AddMissing)
+nmap <leader>jir <Plug>(JavaComplete-Imports-RemoveUnused)
+imap <leader>jir <Plug>(JavaComplete-Imports-RemoveUnused)
 
 
 "设置在vim打开terminal窗口
@@ -355,22 +362,18 @@ tnoremap <leader>wc  <C-W><C-c>
 " gutentags
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-
 " 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
-
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
 let s:vim_tags = expand('~/.cache/tags')
 let g:gutentags_cache_dir = s:vim_tags
-
 " 配置 ctags 的参数
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-
 " 检测 ~/.cache/tags 不存在就新建
 if !isdirectory(s:vim_tags)
-   silent! call mkdir(s:vim_tags, 'p')
+    silent! call mkdir(s:vim_tags, 'p')
 endif
 
 "设置LeaderF
@@ -390,11 +393,14 @@ let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0}
 let g:Lf_NormalMap = {
-	\ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
-	\ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
-	\ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
-	\ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
-	\ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
-	\ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
-	\ }
+            \ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+            \ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+            \ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+            \ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+            \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+            \ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+            \ }
 
+set noshowmode
+"let g:echodoc#enable_at_startup = 1
+"set completeopt-=preview
