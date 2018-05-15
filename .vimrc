@@ -268,7 +268,7 @@ noremap <C-k> :bp<CR>
 " 设置相同多光标控制插件multi_cursor
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-m>'
-let g:multi_cursor_skip_key='<M-k>'
+let g:multi_cursor_skip_key='<M-q>'
 let g:multi_cursor_quit_key='<Esc>'
 
 "设置由借口快速生成实现框架插件pullproto(快捷键<leader>PP,<leader>PN)
@@ -298,9 +298,6 @@ hi! clear SpellRare
 hi! SpellBad gui=undercurl guisp=red
 hi! SpellCap gui=undercurl guisp=blue
 hi! SpellRare gui=undercurl guisp=magenta
-
-"设置快速标号
-nnoremap <leader><leader>n :'<,'>s/^/\=line(".") - line("'<") + 1.".\t"/  <cr>
 
 "设置MarkDown文档静止折叠
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
@@ -332,13 +329,55 @@ imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
 let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`'} 
 
 "设置alt键不能映射的问题
-let c='a'
-while c <= 'z'
-    exec "set <A-".c.">=\e".c
-    exec "imap \e".c." <A-".c.">"
-    let c = nr2char(1+char2nr(c))
-endw
-set timeout ttimeoutlen=50
+"let c='a'
+"while c <= 'z'
+    "exec "set <A-".c.">=\e".c
+    "exec "imap \e".c." <A-".c.">"
+    "let c = nr2char(1+char2nr(c))
+"endw
+function! Terminal_MetaMode(mode)
+    set ttimeout
+    if $TMUX != ''
+        set ttimeoutlen=30
+    elseif &ttimeoutlen > 80 || &ttimeoutlen <= 0
+        set ttimeoutlen=80
+    endif
+    if has('nvim') || has('gui_running')
+        return
+    endif
+    function! s:metacode(mode, key)
+        if a:mode == 0
+            exec "set <M-".a:key.">=\e".a:key
+        else
+            exec "set <M-".a:key.">=\e]{0}".a:key."~"
+        endif
+    endfunc
+    for i in range(10)
+        call s:metacode(a:mode, nr2char(char2nr('0') + i))
+    endfor
+    for i in range(26)
+        call s:metacode(a:mode, nr2char(char2nr('a') + i))
+        call s:metacode(a:mode, nr2char(char2nr('A') + i))
+    endfor
+    if a:mode != 0
+        for c in [',', '.', '/', ';', '[', ']', '{', '}']
+            call s:metacode(a:mode, c)
+        endfor
+        for c in ['?', ':', '-', '_']
+            call s:metacode(a:mode, c)
+        endfor
+    else
+        for c in [',', '.', '/', ';', '{', '}']
+            call s:metacode(a:mode, c)
+        endfor
+        for c in ['?', ':', '-', '_']
+            call s:metacode(a:mode, c)
+        endfor
+    endif
+endfunc
+
+call Terminal_MetaMode(0)
+"set timeout ttimeoutlen=50
 
 "设置javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
