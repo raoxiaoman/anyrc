@@ -344,13 +344,6 @@ imap <silent> <leader>smd <Plug>StopMarkdownPreview
 "设置auto-pair的匹配符号
 let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '(':')' } 
 
-"设置alt键不能映射的问题
-"let c='a'
-"while c <= 'z'
-    "exec "set <A-".c.">=\e".c
-    "exec "imap \e".c." <A-".c.">"
-    "let c = nr2char(1+char2nr(c))
-"endw
 function! Terminal_MetaMode(mode)
     set ttimeout
     if $TMUX != ''
@@ -406,7 +399,6 @@ imap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
 nmap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
 imap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
 
-
 "设置在vim打开terminal窗口
 nnoremap <leader>vt :vertical terminal++close<CR>
 nnoremap <leader>t :terminal++close<CR>
@@ -457,4 +449,3 @@ let g:Lf_NormalMap = {
 
 set noshowmode
 let g:echodoc#enable_at_startup = 1
-"set completeopt-=preview
