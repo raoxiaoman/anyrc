@@ -381,14 +381,14 @@ call Terminal_MetaMode(0)
 
 "设置javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-nmap <leader>jis <Plug>(JavaComplete-Imports-AddSmart)
-imap <leader>jis <Plug>(JavaComplete-Imports-AddSmart)
-nmap <leader>ji <Plug>(JavaComplete-Imports-Add)
-imap <leader>ji <Plug>(JavaComplete-Imports-Add)
-nmap <leader>jim <Plug>(JavaComplete-Imports-AddMissing)
-imap <leader>jim <Plug>(JavaComplete-Imports-AddMissing)
-nmap <leader>jir <Plug>(JavaComplete-Imports-RemoveUnused)
-imap <leader>jir <Plug>(JavaComplete-Imports-RemoveUnused)
+nmap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
+imap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
+nmap <M-a> <Plug>(JavaComplete-Imports-Add)
+imap <M-a> <Plug>(JavaComplete-Imports-Add)
+nmap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
+imap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
+nmap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
+imap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
 
 
 "设置在vim打开terminal窗口
@@ -416,7 +416,7 @@ endif
 
 "设置LeaderF
 let g:Lf_ShortcutF = '<c-p>'
-let g:Lf_ShortcutB = '<m-n>'
+let g:Lf_ShortcutB = '<leader>lb'
 noremap <leader>lm :LeaderfMru<cr>
 noremap <leader>lf :LeaderfFunction!<cr>
 noremap <leader>lb :LeaderfBuffer<cr>
