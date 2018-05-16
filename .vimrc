@@ -45,7 +45,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'w0rp/ale'
 "功能：列出当前代码的函数树,需要安装ctags(sudo apt-get install ctags),快捷键：<F5>
 "Plug 'majutsushi/tagbar'
-"功能: 函数查找 目录当前文件查找 tag查找 buff查找
+"功能: 函数查找 目录当前文件查找 tag查找 buff查找 快捷键<leader>l{}
 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 "功能：列出当前路径的目录树,快捷键：<c-l>
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -116,40 +116,8 @@ syntax on
 "set hlsearch
 "设置鼠标模式
 set mouse=a
-"关闭默认模式提醒
-"set cmdheight=2
-set timeout ttimeoutlen=50
 
-" 自动打开 quickfix window ，高度为 6
-let g:asyncrun_open = 6
-" 任务结束时候响铃提醒
-let g:asyncrun_bell = 1
-let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-"function! Build_java ()
-    "let cwd = fnamemodify('.', ':p')
-    ""echo cwd
-    "let cwd_out = cwd . "out/"
-    ""echo cwd_out
-    "if !isdirectory(cwd_out)
-        "silent! call mkdir(cwd_out,"p")
-        ":AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
-    "else
-        ":AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
-    "endif
-"endfunction
-" 设置 F10 打开/关闭 Quickfix 窗口
-nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
-nnoremap <silent> <F9> :AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
-nnoremap <silent> <F7> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
-nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
-"nnoremap <silent> <S-F9> :AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" <cr>
-"nnoremap <silent> <S-F9> :call Build_java() <cr>
-"nnoremap <silent> <S-F5> :AsyncRun -raw java -classpath "$(VIM_FILEDIR)/out/" "$(VIM_FILENOEXT)" <cr>
-"nnoremap <silent> <S-F5> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml exec:java -Dexec.mainClass="com.raohuii.$(VIM_FILENOEXT)" <cr>
-
+" 设置主题颜色为dracula
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
     syntax on
     set t_Co=256
@@ -182,168 +150,11 @@ imap <leader>w <C-o>:w<CR>
 " 设置保存退出快捷键
 nnoremap zz :wq<CR>
 
-"设置模板补全插件UltiSnips
-"tab 键与 YCM 冲突，重新设定
-let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
-let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
-
-"设置YouCompleteMe代码补全和跳转插件
-function! Config_Youcompleteme()
-    " YCM 补全菜单配色
-    highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
-    let g:ycm_global_ycm_extra_conf = '/home/raohui/.ycm_extra_conf.py'
-    "回车即选中当前项
-    inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"    
-    "设置跳转快捷键
-    nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
-    nnoremap <C-b> :YcmCompleter GoTo <CR>
-    " 补全功能在注释中同样有效
-    let g:ycm_complete_in_comments=1
-    " 允许 vim 加载 .ycm_extra_conf.py 文件
-    let g:ycm_confirm_extra_conf=0
-    " 开启 YCM 标签补全引擎
-    let g:ycm_collect_identifiers_from_tags_files=1
-    " 引入 C++ 标准库tags
-    "set tags+=/home/raohui/.vim/tags/stdcpp.tags
-    " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
-    "inoremap <leader>; <C-x><C-o>
-    " 补全内容不以分割子窗口形式出现，只显示补全列表
-    "set completeopt-=preview
-    " 禁止缓存匹配项，每次都重新生成匹配项
-    let g:ycm_cache_omnifunc=0
-    " 语法关键字补全
-    let g:ycm_seed_identifiers_with_syntax=1
-    let g:ycm_key_invoke_completion = '<c-a>'
-    let g:ycm_add_preview_to_completeopt = 0
-    let g:ycm_show_diagnostics_ui = 0
-    let g:ycm_server_log_level = 'info'
-    let g:ycm_min_num_identifier_candidate_chars = 2
-    let g:ycm_collect_identifiers_from_comments_and_strings = 1
-    let g:ycm_complete_in_strings=1
-    set completeopt=menu,menuone
-    noremap <c-z> <NOP>
-    let g:ycm_semantic_triggers =  {
-                \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-                \ 'cs,lua,javascript': ['re!\w{2}'],
-                \ }
-endfunction
-call Config_Youcompleteme()
-
-
-" 设置文件中光标快速移动插件EasyMotion
-let g:EasyMotion_do_mapping = 0
-map / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map n <Plug>(easymotion-next)
-map N <Plug>(easymotion-prev)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
-" 设置文件视图插件NERDTReeToggle
-" 快捷键
-map <c-l> :NERDTreeToggle<CR>
-" 设置NERDTree子窗口宽度
-let NERDTreeWinSize=35
-" 设置NERDTree子窗口位置
-let NERDTreeWinPos="left"
-" 显示隐藏文件
-let NERDTreeShowHidden=1
-" NERDTree 子窗口中不显示冗余帮助信息
-let NERDTreeMinimalUI=1
-" 删除文件时自动删除文件对应 buffer
-let NERDTreeAutoDeleteBuffer=1
-
-" 使用 ctrlsf.vim插件在工程内全局查找光标所在关键字，设置快捷键。
-let g:ctrlsf_ackprg = 'ag'
-nnoremap <C-f> :CtrlSF<SPACE>
-
-"设置标签生成插件gtags.vim 设置项
-"let GtagsCscope_Auto_Load = 1
-"let CtagsCscope_Auto_Map = 1
-"let GtagsCscope_Quiet = 1
-"set cscopetag " 使用 cscope 作为 tags 命令
-"set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
-"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
-"command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
-"au VimEnter * call VimEnterCallback()
-""au BufAdd *.[ch] call FindGtags(expand('<afile>'))
-"au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-
-"设置vim_airline
-let g:airline#extensions#tabline#enabled = 1
-"let g:airline_powerline_fonts = 1  
-let g:airline#extensions#tabline#buffer_nr_show = 1
-
 "设置切换Buffer快捷键"
 nnoremap <C-j> :bn<CR>
 noremap <C-k> :bp<CR>
 
-" 设置搜索文件插件FZF快捷键
-"map <leader>fz :FZF<CR>
-
-" 设置相同多光标控制插件multi_cursor
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-m>'
-let g:multi_cursor_skip_key='<M-q>'
-let g:multi_cursor_quit_key='<Esc>'
-
-"设置由借口快速生成实现框架插件pullproto(快捷键<leader>PP,<leader>PN)
-" 成员函数的实现顺序与声明顺序一致
-let g:disable_protodef_sorting=1
-" 设置 pullproto.pl 脚本路径
-let g:protodefprotogetter='~/.vim/plugged/vim-protodef/pullproto.pl'
-
-" 设置代码检查ale
-set nocompatible
-filetype off
-filetype plugin on
-let g:ale_sign_column_always = 1
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_insert_leave = 1
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = 'w'
-let g:airline#extensions#ale#enabled = 1
-let g:ale_linters = { 'cpp': ['g++'],'c': ['gcc']}
-let g:ale_cpp_gcc_options='-std=c++11 -Wall -Wextra'
-let g:ale_c_gcc_options='-std=c++11 -Wall -Wextra'
-"let g:ale_sign_error = "\ue009\ue009"
-hi! clear SpellBad
-hi! clear SpellCap
-hi! clear SpellRare
-hi! SpellBad gui=undercurl guisp=red
-hi! SpellCap gui=undercurl guisp=blue
-hi! SpellRare gui=undercurl guisp=magenta
-
-"设置MarkDown文档静止折叠
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
-"let g:vim_markdown_folding_disabled = 1
-"设置MarkDown插件的文件关联
-"设置MarkDown文档pyhon-mode主题
-"let g:vim_markdown_folding_style_pythonic = 1
-" 设置支持yaml语法
-"let g:vim_markdown_frontmatter=1 
-
-"设置MarkDown文档预览快捷键
-"普通模式
-nmap <silent> <leader>md <Plug>MarkdownPreview        
-"插入模式
-imap <silent> <leader>md <Plug>MarkdownPreview         
-"普通模式
-nmap <silent> <Leader>smd <Plug>StopMarkdownPreview    
-"插入模式
-imap <silent> <leader>smd <Plug>StopMarkdownPreview    
-
-"设置CompleteParameter
-"inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-"smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-"imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-"smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
-"imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
-
-"设置auto-pair的匹配符号
-let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '(':')' } 
-
+"处理alt键不能识别的问题
 function! Terminal_MetaMode(mode)
     set ttimeout
     if $TMUX != ''
@@ -384,11 +195,180 @@ function! Terminal_MetaMode(mode)
         endfor
     endif
 endfunc
-
 call Terminal_MetaMode(0)
-"set timeout ttimeoutlen=50
 
-"设置javacomplete2
+"设置在vim打开sh窗口
+nnoremap <leader>vt :vertical terminal++close<CR>
+nnoremap <leader>t :terminal++close<CR>
+tnoremap <leader>wc  <C-W><C-c> 
+
+"设置模板补全插件UltiSnips
+"tab 键与 YCM 冲突，重新设定
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
+
+"设置YouCompleteMe代码补全和跳转插件
+function! Config_Youcompleteme()
+    " YCM 补全菜单配色
+    highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
+    let g:ycm_global_ycm_extra_conf = '/home/raohui/.ycm_extra_conf.py'
+    "回车即选中当前项
+    inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"    
+    "设置跳转快捷键
+    nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
+    nnoremap <C-b> :YcmCompleter GoTo <CR>
+    " 补全功能在注释中同样有效
+    let g:ycm_complete_in_comments=1
+    " 允许 vim 加载 .ycm_extra_conf.py 文件
+    let g:ycm_confirm_extra_conf=0
+    " 开启 YCM 标签补全引擎
+    let g:ycm_collect_identifiers_from_tags_files=1
+    " 禁止缓存匹配项，每次都重新生成匹配项
+    let g:ycm_cache_omnifunc=0
+    " 语法关键字补全
+    let g:ycm_seed_identifiers_with_syntax=1
+    let g:ycm_key_invoke_completion = '<c-a>'
+    let g:ycm_add_preview_to_completeopt = 0
+    let g:ycm_show_diagnostics_ui = 0
+    let g:ycm_server_log_level = 'info'
+    let g:ycm_min_num_identifier_candidate_chars = 2
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
+    let g:ycm_complete_in_strings=1
+    set completeopt=menu,menuone
+    noremap <c-z> <NOP>
+    let g:ycm_semantic_triggers =  {
+                \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+                \ 'cs,lua,javascript': ['re!\w{2}'],
+                \ }
+endfunction
+call Config_Youcompleteme()
+
+"设置AsyncRun插件
+" 自动打开 quickfix window ，高度为 6
+let g:asyncrun_open = 6
+" 任务结束时候响铃提醒
+let g:asyncrun_bell = 1
+let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
+" 设置 F10 打开/关闭 Quickfix 窗口
+nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+" 设置java C++ C 的编译和运行快捷键
+"c/c++
+nnoremap <silent> <F9> :AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
+nnoremap <silent> <F7> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
+nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
+"java 需要安装Maven
+nnoremap <silent> <S-F9> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml compile <cr>
+nnoremap <silent> <S-F5> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml exec:java -Dexec.mainClass="com.raohui.$(VIM_FILENOEXT)" <cr>
+
+" 设置文件中光标快速移动插件EasyMotion
+let g:EasyMotion_do_mapping = 0
+map / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-prev)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+" 设置文件视图插件NERDTReeToggle
+" 快捷键
+map <c-l> :NERDTreeToggle<CR>
+" 设置NERDTree子窗口宽度
+let NERDTreeWinSize=35
+" 设置NERDTree子窗口位置
+let NERDTreeWinPos="left"
+" 显示隐藏文件
+let NERDTreeShowHidden=1
+" NERDTree 子窗口中不显示冗余帮助信息
+let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let NERDTreeAutoDeleteBuffer=1
+
+" 使用 ctrlsf.vim插件,在工程内全局查找光标所在关键字，设置快捷键。
+let g:ctrlsf_ackprg = 'ag'
+nnoremap <C-f> :CtrlSF<SPACE>
+
+"设置标签生成插件gtags.vim 设置项
+"let GtagsCscope_Auto_Load = 1
+"let CtagsCscope_Auto_Map = 1
+"let GtagsCscope_Quiet = 1
+"set cscopetag " 使用 cscope 作为 tags 命令
+"set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
+"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
+
+"设置vim_airline插件
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline_powerline_fonts = 1  
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" 设置搜索文件插件FZF快捷键
+"map <leader>fz :FZF<CR>
+
+" 设置相同多光标控制插件multi_cursor
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-m>'
+let g:multi_cursor_skip_key='<M-q>'
+let g:multi_cursor_quit_key='<Esc>'
+
+"设置由借口快速生成实现框架插件pullproto(快捷键<leader>PP,<leader>PN)
+" 成员函数的实现顺序与声明顺序一致
+let g:disable_protodef_sorting=1
+" 设置 pullproto.pl 脚本路径
+let g:protodefprotogetter='~/.vim/plugged/vim-protodef/pullproto.pl'
+
+" 设置代码检查插件ale
+set nocompatible
+filetype off
+filetype plugin on
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = 'w'
+let g:airline#extensions#ale#enabled = 1
+let g:ale_linters = { 'cpp': ['g++'],'c': ['gcc']}
+let g:ale_cpp_gcc_options='-std=c++11 -Wall -Wextra'
+let g:ale_c_gcc_options='-std=c++11 -Wall -Wextra'
+hi! clear SpellBad
+hi! clear SpellCap
+hi! clear SpellRare
+hi! SpellBad gui=undercurl guisp=red
+hi! SpellCap gui=undercurl guisp=blue
+hi! SpellRare gui=undercurl guisp=magenta
+
+"设置MarkDown插件
+"设置MarkDown的文件名关联
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
+"let g:vim_markdown_folding_disabled = 1
+"设置MarkDown文档pyhon-mode主题
+"let g:vim_markdown_folding_style_pythonic = 1
+" 设置支持yaml语法
+"let g:vim_markdown_frontmatter=1 
+
+"设置MarkDown文档预览插件快捷键
+"普通模式
+nmap <silent> <leader>md <Plug>MarkdownPreview        
+"插入模式
+imap <silent> <leader>md <Plug>MarkdownPreview         
+"普通模式
+nmap <silent> <Leader>smd <Plug>StopMarkdownPreview    
+"插入模式
+imap <silent> <leader>smd <Plug>StopMarkdownPreview    
+
+"设置插件CompleteParameter
+"inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+"smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+"imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+"smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+"imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+
+"设置auto-pair插件的匹配符号
+let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '(':')' } 
+
+"设置javacomplete2插件
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
 "nmap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
 "imap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
@@ -401,12 +381,7 @@ call Terminal_MetaMode(0)
 "let g:syntastic_java_checkers = []
 "let g:EclimFileTypeValidate = 0
 
-"设置在vim打开terminal窗口
-nnoremap <leader>vt :vertical terminal++close<CR>
-nnoremap <leader>t :terminal++close<CR>
-tnoremap <leader>wc  <C-W><C-c> 
-
-" gutentags
+"设置gutentags插件(tags自动生成,代替gtags)
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 " 所生成的数据文件的名称
@@ -423,7 +398,7 @@ if !isdirectory(s:vim_tags)
     silent! call mkdir(s:vim_tags, 'p')
 endif
 
-"设置LeaderF
+"设置插件LeaderF(代替fzf)
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<leader>lb'
 noremap <leader>lm :LeaderfMru<cr>
@@ -448,5 +423,7 @@ let g:Lf_NormalMap = {
             \ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
             \ }
 
+"设置echodoc
 set noshowmode
+"关闭默认模式提醒
 let g:echodoc#enable_at_startup = 1
