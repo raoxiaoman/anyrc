@@ -24,7 +24,7 @@ Plug 'tomasr/molokai'
 "功能：状态栏和标签页,主题
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' "功能：代码补全以及代码函数跳转,快捷键：ctrl+b
-Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer' }
+Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer --java-completer --js-completer' }
 "功能：生成YouCompleteMe的配置文件,用法：config_gen.py .
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 "功能：git修改显示
@@ -73,7 +73,7 @@ Plug 'iamcco/markdown-preview.vim'
 "功能：函数补全的同时添加参数
 "Plug 'tenfyzhong/CompleteParameter.vim'
 "功能：java代码补全
-Plug 'artur-shaik/vim-javacomplete2'
+"Plug 'artur-shaik/vim-javacomplete2'
 "功能：中文输入法问题
 Plug 'vim-scripts/fcitx.vim'
 "功能: ctags自动生成
@@ -125,18 +125,18 @@ let g:asyncrun_open = 6
 " 任务结束时候响铃提醒
 let g:asyncrun_bell = 1
 let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-function! Build_java ()
-    let cwd = fnamemodify('.', ':p')
-    "echo cwd
-    let cwd_out = cwd . "out/"
-    "echo cwd_out
-    if !isdirectory(cwd_out)
-        silent! call mkdir(cwd_out,"p")
-        :AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
-    else
-        :AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
-    endif
-endfunction
+"function! Build_java ()
+    "let cwd = fnamemodify('.', ':p')
+    ""echo cwd
+    "let cwd_out = cwd . "out/"
+    ""echo cwd_out
+    "if !isdirectory(cwd_out)
+        "silent! call mkdir(cwd_out,"p")
+        ":AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
+    "else
+        ":AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" 
+    "endif
+"endfunction
 " 设置 F10 打开/关闭 Quickfix 窗口
 nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
 nnoremap <silent> <F9> :AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
@@ -145,10 +145,10 @@ nnoremap <silent> <F7> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILED
 nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
 nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
-
 "nnoremap <silent> <S-F9> :AsyncRun javac -d "$(VIM_FILEDIR)/out/" "$(VIM_FILEPATH)" <cr>
-nnoremap <silent> <S-F9> :call Build_java() <cr>
-nnoremap <silent> <S-F5> :AsyncRun -raw java -classpath "$(VIM_FILEDIR)/out/" "$(VIM_FILENOEXT)" <cr>
+"nnoremap <silent> <S-F9> :call Build_java() <cr>
+"nnoremap <silent> <S-F5> :AsyncRun -raw java -classpath "$(VIM_FILEDIR)/out/" "$(VIM_FILENOEXT)" <cr>
+"nnoremap <silent> <S-F5> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml exec:java -Dexec.mainClass="com.raohuii.$(VIM_FILENOEXT)" <cr>
 
 if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
     syntax on
@@ -209,7 +209,7 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
     "inoremap <leader>; <C-x><C-o>
     " 补全内容不以分割子窗口形式出现，只显示补全列表
-    "set completeopt-=preview
+    set completeopt-=preview
     " 禁止缓存匹配项，每次都重新生成匹配项
     let g:ycm_cache_omnifunc=0
     " 语法关键字补全
@@ -225,7 +225,7 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     noremap <c-a> <NOP>
     " 添加自动语法补全促发
     let g:ycm_semantic_triggers =  {
-                \ 'c,cpp,python,go,erlang,perl': ['re!\w{2}'],
+                \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
                 \ 'cs,lua,javascript': ['re!\w{2}'],
                 \ }
 endif
@@ -389,21 +389,22 @@ call Terminal_MetaMode(0)
 "set timeout ttimeoutlen=50
 
 "设置javacomplete2
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-nmap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
-imap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
-nmap <M-a> <Plug>(JavaComplete-Imports-Add)
-imap <M-a> <Plug>(JavaComplete-Imports-Add)
-nmap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
-imap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
-nmap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
-imap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
+"autocmd FileType java setlocal omnifunc=javacomplete#Complete
+"nmap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
+"imap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
+"nmap <M-a> <Plug>(JavaComplete-Imports-Add)
+"imap <M-a> <Plug>(JavaComplete-Imports-Add)
+"nmap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
+"imap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
+"nmap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
+"imap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
+"let g:syntastic_java_checkers = []
+"let g:EclimFileTypeValidate = 0
 
 "设置在vim打开terminal窗口
 nnoremap <leader>vt :vertical terminal++close<CR>
 nnoremap <leader>t :terminal++close<CR>
 tnoremap <leader>wc  <C-W><C-c> 
-
 
 " gutentags
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
