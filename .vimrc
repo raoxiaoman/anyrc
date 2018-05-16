@@ -189,7 +189,7 @@ let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
 "设置YouCompleteMe代码补全和跳转插件
-if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
+function! Config_Youcompleteme()
     " YCM 补全菜单配色
     highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
     let g:ycm_global_ycm_extra_conf = '/home/raohui/.ycm_extra_conf.py'
@@ -209,7 +209,7 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
     "inoremap <leader>; <C-x><C-o>
     " 补全内容不以分割子窗口形式出现，只显示补全列表
-    set completeopt-=preview
+    "set completeopt-=preview
     " 禁止缓存匹配项，每次都重新生成匹配项
     let g:ycm_cache_omnifunc=0
     " 语法关键字补全
@@ -222,13 +222,14 @@ if !empty(glob("~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so"))
     let g:ycm_collect_identifiers_from_comments_and_strings = 1
     let g:ycm_complete_in_strings=1
     set completeopt=menu,menuone
-    noremap <c-a> <NOP>
-    " 添加自动语法补全促发
+    noremap <c-z> <NOP>
     let g:ycm_semantic_triggers =  {
                 \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
                 \ 'cs,lua,javascript': ['re!\w{2}'],
                 \ }
-endif
+endfunction
+call Config_Youcompleteme()
+
 
 " 设置文件中光标快速移动插件EasyMotion
 let g:EasyMotion_do_mapping = 0
@@ -296,7 +297,6 @@ let g:protodefprotogetter='~/.vim/plugged/vim-protodef/pullproto.pl'
 " 设置代码检查ale
 set nocompatible
 filetype off
-let &runtimepath.=',~/.vim/plugged/ale/'
 filetype plugin on
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 'normal'
