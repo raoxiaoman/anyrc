@@ -80,6 +80,8 @@ Plug 'vim-scripts/fcitx.vim'
 Plug 'ludovicchabant/vim-gutentags'
 "功能: 函数参数提示
 Plug 'Shougo/echodoc.vim'
+"预览tag
+Plug 'skywind3000/vim-preview'
 call plug#end()
 
 "设置编码
@@ -387,17 +389,31 @@ let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '(':')' }
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 " 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
-" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+" 同时开启 ctags 和 gtags 支持：
+let g:gutentags_modules = []
+if executable('ctags')
+	let g:gutentags_modules += ['ctags']
+endif
+"可以下载https://github.com/skywind3000/vim/blob/master/plugin/gutentags_plus.vim 复制到~/.vim/plugin下面
+"避免不同项目的gtags混淆
+if executable('gtags-cscope') && executable('gtags')
+	let g:gutentags_modules += ['gtags_cscope']
+endif
+" 检测 ~/.cache/tags 不存在就新建
 let s:vim_tags = expand('~/.cache/tags')
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+if !isdirectory(s:vim_tags)
+    silent! call mkdir(s:vim_tags, 'p')
+endif
 let g:gutentags_cache_dir = s:vim_tags
 " 配置 ctags 的参数
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-" 检测 ~/.cache/tags 不存在就新建
-if !isdirectory(s:vim_tags)
-    silent! call mkdir(s:vim_tags, 'p')
-endif
+" 如果使用 universal ctags 需要增加下面一行
+"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+" 禁用 gutentags 自动加载 gtags 数据库的行为
+let g:gutentags_auto_add_gtags_cscope = 0
 
 "设置插件LeaderF(代替fzf)
 let g:Lf_ShortcutF = '<c-p>'
@@ -428,3 +444,9 @@ let g:Lf_NormalMap = {
 set noshowmode
 "关闭默认模式提醒
 let g:echodoc#enable_at_startup = 1
+
+"设置插件vim-preview
+noremap <m-u> :PreviewScroll -1<cr>
+noremap <m-d> :PreviewScroll +1<cr>
+inoremap <m-u> <c-\><c-o>:PreviewScroll -1<cr>
+inoremap <m-d> <c-\><c-o>:PreviewScroll +1<cr>
