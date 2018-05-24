@@ -19,9 +19,8 @@ Plug 'dyng/ctrlsf.vim',{'on': 'CtrlSF'}
 "功能：在当前目录查找目标文件,快捷键ctrl+p
 "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "功能：vim主题
-Plug 'dracula/vim'
 Plug 'tomasr/molokai'
-"功能：状态栏和标签页,主题
+"功能：状态栏和标签页,主题,字体
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' "功能：代码补全以及代码函数跳转,快捷键：ctrl+b
 Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer --java-completer --js-completer' }
@@ -46,7 +45,7 @@ Plug 'w0rp/ale'
 "功能：列出当前代码的函数树,需要安装ctags(sudo apt-get install ctags),快捷键：<F5>
 "Plug 'majutsushi/tagbar'
 "功能: 函数查找 目录当前文件查找 tag查找 buff查找 快捷键<leader>l{}
-Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 "功能：列出当前路径的目录树,快捷键：<c-l>
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 "功能：光标跳转（匹配两个字符）,快捷键：s
@@ -92,6 +91,7 @@ set number
 set smartindent
 " 自适应不同语言的智能缩进
 filetype indent on
+filetype plugin on
 " 将制表符扩展为空格
 set expandtab
 " 设置编辑时制表符占用空格数
@@ -119,17 +119,10 @@ syntax on
 "设置鼠标模式
 set mouse=a
 
-" 设置主题颜色为dracula
-if !empty(glob("~/.vim/plugged/vim/colors/dracula.vim"))
-    syntax on
-    set t_Co=256
-    set background=dark
-    colorscheme dracula
-    hi Normal ctermfg=white ctermbg=black
-endif
 " 设置主题颜色为molokai
-"let g:rehash256 = 1
-"colorscheme molokai
+set t_Co=256
+let g:rehash256 = 1
+colorscheme molokai
 
 " 设置leader键
 let mapleader=","
@@ -238,7 +231,7 @@ function! Config_Youcompleteme()
     let g:ycm_collect_identifiers_from_comments_and_strings = 1
     let g:ycm_complete_in_strings=1
     set completeopt=menu,menuone
-    noremap <c-z> <NOP>
+    noremap <c-a> <NOP>
     let g:ycm_semantic_triggers =  {
                 \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
                 \ 'cs,lua,javascript': ['re!\w{2}'],
@@ -303,9 +296,14 @@ nnoremap <C-f> :CtrlSF<SPACE>
 "set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
 
 "设置vim_airline插件
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
 let g:airline#extensions#tabline#enabled = 1
-"let g:airline_powerline_fonts = 1  
+let g:airline_powerline_fonts = 1  
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_symbols.branch = 'branch'
+"let g:airline_symbols.branch = '⎇'
 
 " 设置搜索文件插件FZF快捷键
 "map <leader>fz :FZF<CR>
@@ -324,32 +322,27 @@ let g:protodefprotogetter='~/.vim/plugged/vim-protodef/pullproto.pl'
 
 " 设置代码检查插件ale
 set nocompatible
-filetype off
-filetype plugin on
-let g:ale_sign_column_always = 1
+let g:ale_linters_explicit = 1
+let g:ale_completion_delay = 500
+let g:ale_echo_delay = 20
+let g:ale_lint_delay = 500
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = 'w'
 let g:airline#extensions#ale#enabled = 1
-let g:ale_linters = { 'cpp': ['g++'],'c': ['gcc'],'cc': ['g++']}
-let g:ale_cpp_gcc_options='-std=c++11 -Wall -Wextra'
-let g:ale_c_gcc_options='-std=c++11 -Wall -Wextra'
-hi! clear SpellBad
-hi! clear SpellCap
-hi! clear SpellRare
-hi! SpellBad gui=undercurl guisp=red
-hi! SpellCap gui=undercurl guisp=blue
-hi! SpellRare gui=undercurl guisp=magenta
+let g:ale_linters = { 'cpp': ['clang'],'c': ['clang'],'cc': ['clang']}
+let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+let g:ale_c_cppcheck_options = ''
+let g:ale_cpp_cppcheck_options = ''
 
 "设置MarkDown插件
 "设置MarkDown的文件名关联
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
-"let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_folding_disabled = 1
 "设置MarkDown文档pyhon-mode主题
-"let g:vim_markdown_folding_style_pythonic = 1
-" 设置支持yaml语法
-"let g:vim_markdown_frontmatter=1 
+let g:vim_markdown_folding_style_pythonic = 1
+"设置支持yaml语法
+let g:vim_markdown_frontmatter=1 
 
 "设置MarkDown文档预览插件快捷键
 "普通模式
@@ -392,12 +385,12 @@ let g:gutentags_ctags_tagfile = '.tags'
 " 同时开启 ctags 和 gtags 支持：
 let g:gutentags_modules = []
 if executable('ctags')
-	let g:gutentags_modules += ['ctags']
+    let g:gutentags_modules += ['ctags']
 endif
 "可以下载https://github.com/skywind3000/vim/blob/master/plugin/gutentags_plus.vim 复制到~/.vim/plugin下面
 "避免不同项目的gtags混淆
 if executable('gtags-cscope') && executable('gtags')
-	let g:gutentags_modules += ['gtags_cscope']
+    let g:gutentags_modules += ['gtags_cscope']
 endif
 " 检测 ~/.cache/tags 不存在就新建
 let s:vim_tags = expand('~/.cache/tags')
@@ -455,3 +448,4 @@ autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
 
 
 au BufRead,BufNewFile *.{cc,cpp,hpp} set filetype=cpp
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
