@@ -17,7 +17,7 @@ call plug#begin('~/.vim/plugged')
 "需先安装ag(sudo apt-get install silversearcher-ag),快捷键：ctrl+f
 Plug 'dyng/ctrlsf.vim',{'on': 'CtrlSF'}
 "功能：在当前目录查找目标文件,快捷键ctrl+p
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "功能：vim主题
 Plug 'tomasr/molokai'
 "功能：状态栏和标签页,主题,字体
