@@ -332,7 +332,7 @@ let g:ale_lint_on_insert_leave = 1
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = 'w'
 let g:airline#extensions#ale#enabled = 1
-let g:ale_linters = { 'cpp': ['g++'],'c': ['gcc']}
+let g:ale_linters = { 'cpp': ['g++'],'c': ['gcc'],'cc': ['g++']}
 let g:ale_cpp_gcc_options='-std=c++11 -Wall -Wextra'
 let g:ale_c_gcc_options='-std=c++11 -Wall -Wextra'
 hi! clear SpellBad
@@ -450,3 +450,8 @@ noremap <m-u> :PreviewScroll -1<cr>
 noremap <m-d> :PreviewScroll +1<cr>
 inoremap <m-u> <c-\><c-o>:PreviewScroll -1<cr>
 inoremap <m-d> <c-\><c-o>:PreviewScroll +1<cr>
+autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
+autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
+
+
+au BufRead,BufNewFile *.{cc,cpp,hpp} set filetype=cpp
