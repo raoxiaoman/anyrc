@@ -76,10 +76,11 @@ source $ZSH/oh-my-zsh.sh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 export PATH="$PATH:/home/raohui/.vim/plugged/YCM-Generator"
 
-export JAVA_HOME="/usr/local/jdk1.8.0_161"
+export JAVA_HOME="/usr/local/jdk-10.0.1"
 export NODE_JS_HOME="/home/raohui/software/node-v8.10.0-linux-x64"
+export MAVEN_HOME="/usr/local/apache-maven-3.5.3"
 
-export PATH="$PATH:$JAVA_HOME/bin:$NODE_JS_HOME/bin"
+export PATH="$PATH:$JAVA_HOME/bin:$NODE_JS_HOME/bin:$MAVEN_HOME/bin"
 
 if [ "$TERM"="linux" ] ;then
 export LANGUAGE=en_US
@@ -89,7 +90,6 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 cat ~/for_jos!
-export PATH="$PATH:/home/raohui/software/cloc-1.74"
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -100,14 +100,3 @@ export PATH="$PATH:/home/raohui/software/cloc-1.74"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias grep="grep --color=auto"
 alias vimrc='vi ~/.vimrc'
-alias -s html='vim'   # 在命令行直接输入后缀为 html 的文件名，会在 Vim 中打开
-alias -s rb='vim'     # 在命令行直接输入 ruby 文件，会在 Vim 中打开
-alias -s py='vim'      # 在命令行直接输入 python 文件，会用 vim 中打开，以下类似
-alias -s js='vim'
-alias -s c='vim'
-alias -s java='vim'
-alias -s txt='vim'
-alias -s gz='tar -xzvf' # 在命令行直接输入后缀为 gz 的文件名，会自动解压打开
-alias -s tgz='tar -xzvf'
-alias -s zip='unzip'
-alias -s bz2='tar -xjvf'
