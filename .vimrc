@@ -59,8 +59,8 @@ Plug 'jiangmiao/auto-pairs'
 "功能：异步命令
 Plug 'skywind3000/asyncrun.vim',{'on': 'AsyncRun'}
 "功能：MarkDown文档预览
-Plug 'iamcco/mathjax-support-for-mkdp',{ 'on': 'MarkdownPreview' }
-Plug 'iamcco/markdown-preview.vim',{ 'on': 'MarkdownPreview' }
+Plug 'iamcco/mathjax-support-for-mkdp',{ 'on': '<Plug> MarkdownPreview' }
+Plug 'iamcco/markdown-preview.vim',{ 'on': '<Plug> MarkdownPreview' }
 "功能：中文输入法问题
 Plug 'vim-scripts/fcitx.vim'
 "功能: ctags和gtags自动生成和管理,
