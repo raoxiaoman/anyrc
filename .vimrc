@@ -133,7 +133,7 @@ colorscheme molokai
 let mapleader=","
 
 " 设置特殊文件的filetype
-au BufRead,BufNewFile *.{cc,cpp,hpp} set filetype=cpp
+au BufRead,BufNewFile *.{cc,hpp} set filetype=cpp
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
 "设置MarkDown不自动折叠
 let g:vim_markdown_folding_disabled = 1
@@ -145,7 +145,6 @@ let g:vim_markdown_frontmatter=1
 " 设置背景在黑色和透明间切换
 map <leader>bn :hi Normal ctermfg=white ctermbg=none<CR>
 map <leader>nb :hi Normal ctermfg=white ctermbg=black<CR>
-
 
 " ESC不方便,设置fd快捷键代替
 "imap <C-I> <Esc>
