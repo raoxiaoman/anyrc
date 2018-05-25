@@ -1,5 +1,5 @@
 "佛祖保佑 永无BUG
-"佛曰: "写字楼里写字间，写字间里程序员； 
+"(会很容易卡)佛曰: "写字楼里写字间，写字间里程序员； 
 "程序人员写程序，又拿程序换酒钱。 
 "酒醒只在网上坐，酒醉还来网下眠； 
 "酒醉酒醒日复日，网上网下年复年。 
@@ -28,10 +28,6 @@ Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer --java-comp
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 "功能：git修改显示
 Plug 'mhinz/vim-signify'
-"功能：vim里面使用git
-Plug 'tpope/vim-fugitive'
-"功能：vim里面使用GNU GLOBAL，需要先安装GNU GLOBAL(https://www.gnu.org/software/global/)
-"Plug 'aceofall/gtags.vim'
 "功能: 代码块补全引擎,快捷键：<leader><Tab>
 Plug 'SirVer/ultisnips'
 "功能：代码块集合
@@ -42,9 +38,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 "功能：代码错误提示异步
 Plug 'w0rp/ale'
-"功能：列出当前代码的函数树,需要安装ctags(sudo apt-get install ctags),快捷键：<F5>
-"Plug 'majutsushi/tagbar'
-"功能: 函数查找 目录当前文件查找 tag查找 buff查找 快捷键<leader>l{}
+"功能: 函数查找 目录当前文件查找 tag查找 buff查找 快捷键<leader> + lt or lf or lb
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 "功能：列出当前路径的目录树,快捷键：<c-l>
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -62,25 +56,34 @@ Plug 'vim-scripts/a.vim'
 "功能：各种配对符号自动补全
 Plug 'jiangmiao/auto-pairs'
 "功能：异步命令
-Plug 'skywind3000/asyncrun.vim'
-"功能：MarkDown文档编辑
+Plug 'skywind3000/asyncrun.vim',{'on': 'AsyncRun'}
+"功能：MarkDown文档预览
+Plug 'iamcco/mathjax-support-for-mkdp',{ 'on': 'MarkdownPreview' }
+Plug 'iamcco/markdown-preview.vim',{ 'on': 'MarkdownPreview' }
+"功能：中文输入法问题
+Plug 'vim-scripts/fcitx.vim'
+"功能: ctags和gtags自动生成和管理,
+"vim里面使用GNU GLOBAL，需要先安装GNU GLOBAL(https://www.gnu.org/software/global/)
+"需要安装ctags(sudo apt-get install ctags)
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
+"功能: 函数参数提示
+Plug 'Shougo/echodoc.vim'
+"功能: 预览tag
+Plug 'skywind3000/vim-preview',{ 'on': 'PreviewQuickfix' }
+"功能: 定义了一系列方括号开头的快捷键
+Plug 'tpope/vim-unimpaired'
+"功能: 管理gtags(被gutentags代替)
+"Plug 'aceofall/gtags.vim'
+"功能：MarkDown文档编辑(molokai配色已经自带,这个作为补充)
 "Plug 'godlygeek/tabular'
 "Plug 'plasticboy/vim-markdown'
-"功能：MarkDown文档预览
-Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.vim'
 "功能：函数补全的同时添加参数
 "Plug 'tenfyzhong/CompleteParameter.vim'
 "功能：java代码补全
 "Plug 'artur-shaik/vim-javacomplete2'
-"功能：中文输入法问题
-Plug 'vim-scripts/fcitx.vim'
-"功能: ctags自动生成
-Plug 'ludovicchabant/vim-gutentags'
-"功能: 函数参数提示
-Plug 'Shougo/echodoc.vim'
-"预览tag
-Plug 'skywind3000/vim-preview'
+"功能：vim里面使用git
+"Plug 'tpope/vim-fugitive'
 call plug#end()
 
 "设置编码
@@ -91,6 +94,7 @@ set number
 set smartindent
 " 自适应不同语言的智能缩进
 filetype indent on
+" 根据文件类型添加插件
 filetype plugin on
 " 将制表符扩展为空格
 set expandtab
@@ -114,10 +118,10 @@ set hidden
 "设置高亮
 syntax enable
 syntax on
-"设置搜索高亮
-"set hlsearch
 "设置鼠标模式
 set mouse=a
+"设置搜索高亮
+"set hlsearch
 
 " 设置主题颜色为molokai
 set t_Co=256
@@ -127,12 +131,20 @@ colorscheme molokai
 " 设置leader键
 let mapleader=","
 
+" 设置特殊文件的filetype
+au BufRead,BufNewFile *.{cc,cpp,hpp} set filetype=cpp
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
+"设置MarkDown不自动折叠
+let g:vim_markdown_folding_disabled = 1
+"设置MarkDown文档pyhon-mode主题
+let g:vim_markdown_folding_style_pythonic = 1
+"设置支持yaml语法
+let g:vim_markdown_frontmatter=1 
+
 " 设置背景在黑色和透明间切换
 map <leader>bn :hi Normal ctermfg=white ctermbg=none<CR>
 map <leader>nb :hi Normal ctermfg=white ctermbg=black<CR>
 
-"让配置立即生效
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 " ESC不方便,设置fd快捷键代替
 "imap <C-I> <Esc>
@@ -197,6 +209,9 @@ nnoremap <leader>vt :vertical terminal++close<CR>
 nnoremap <leader>t :terminal++close<CR>
 tnoremap <leader>wc  <C-W><C-c> 
 
+"让配置立即生效(会很容易让.vimrc卡住)
+"autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
 "设置模板补全插件UltiSnips
 "tab 键与 YCM 冲突，重新设定
 let g:UltiSnipsExpandTrigger="<leader><tab>"
@@ -220,7 +235,7 @@ function! Config_Youcompleteme()
     " 开启 YCM 标签补全引擎
     let g:ycm_collect_identifiers_from_tags_files=1
     " 禁止缓存匹配项，每次都重新生成匹配项
-    let g:ycm_cache_omnifunc=0
+    "let g:ycm_cache_omnifunc=0
     " 语法关键字补全
     let g:ycm_seed_identifiers_with_syntax=1
     let g:ycm_key_invoke_completion = '<c-a>'
@@ -335,14 +350,14 @@ let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
 let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
 let g:ale_c_cppcheck_options = ''
 let g:ale_cpp_cppcheck_options = ''
-
-"设置MarkDown插件
-"设置MarkDown的文件名关联
-let g:vim_markdown_folding_disabled = 1
-"设置MarkDown文档pyhon-mode主题
-let g:vim_markdown_folding_style_pythonic = 1
-"设置支持yaml语法
-let g:vim_markdown_frontmatter=1 
+"let g:ale_sign_error = ">>"
+let g:ale_sign_warning = "w"
+hi! clear SpellBad
+hi! clear SpellCap
+hi! clear SpellRare
+hi! SpellBad gui=undercurl guisp=red
+hi! SpellCap gui=undercurl guisp=blue
+hi! SpellRare gui=undercurl guisp=magenta
 
 "设置MarkDown文档预览插件快捷键
 "普通模式
@@ -354,28 +369,8 @@ nmap <silent> <Leader>smd <Plug>StopMarkdownPreview
 "插入模式
 imap <silent> <leader>smd <Plug>StopMarkdownPreview    
 
-"设置插件CompleteParameter
-"inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-"smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-"imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-"smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
-"imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
-
 "设置auto-pair插件的匹配符号
 let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '(':')' } 
-
-"设置javacomplete2插件
-"autocmd FileType java setlocal omnifunc=javacomplete#Complete
-"nmap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
-"imap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
-"nmap <M-a> <Plug>(JavaComplete-Imports-Add)
-"imap <M-a> <Plug>(JavaComplete-Imports-Add)
-"nmap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
-"imap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
-"nmap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
-"imap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
-"let g:syntastic_java_checkers = []
-"let g:EclimFileTypeValidate = 0
 
 "设置gutentags插件(tags自动生成,代替gtags)
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
@@ -387,7 +382,6 @@ let g:gutentags_modules = []
 if executable('ctags')
     let g:gutentags_modules += ['ctags']
 endif
-"可以下载https://github.com/skywind3000/vim/blob/master/plugin/gutentags_plus.vim 复制到~/.vim/plugin下面
 "避免不同项目的gtags混淆
 if executable('gtags-cscope') && executable('gtags')
     let g:gutentags_modules += ['gtags_cscope']
@@ -403,10 +397,10 @@ let g:gutentags_cache_dir = s:vim_tags
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-" 如果使用 universal ctags 需要增加下面一行
-"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 " 禁用 gutentags 自动加载 gtags 数据库的行为
 let g:gutentags_auto_add_gtags_cscope = 0
+" 如果使用 universal ctags 需要增加下面一行
+"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 "设置插件LeaderF(代替fzf)
 let g:Lf_ShortcutF = '<c-p>'
@@ -434,8 +428,8 @@ let g:Lf_NormalMap = {
             \ }
 
 "设置echodoc
-set noshowmode
 "关闭默认模式提醒
+set noshowmode
 let g:echodoc#enable_at_startup = 1
 
 "设置插件vim-preview
@@ -446,6 +440,22 @@ inoremap <m-d> <c-\><c-o>:PreviewScroll +1<cr>
 autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
 autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
 
+"设置插件CompleteParameter
+"inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+"smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+"imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
+"smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
+"imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
 
-au BufRead,BufNewFile *.{cc,cpp,hpp} set filetype=cpp
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
+"设置javacomplete2插件
+"autocmd FileType java setlocal omnifunc=javacomplete#Complete
+"nmap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
+"imap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
+"nmap <M-a> <Plug>(JavaComplete-Imports-Add)
+"imap <M-a> <Plug>(JavaComplete-Imports-Add)
+"nmap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
+"imap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
+"nmap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
+"imap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
+"let g:syntastic_java_checkers = []
+"let g:EclimFileTypeValidate = 0
