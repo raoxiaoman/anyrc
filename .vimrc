@@ -26,7 +26,7 @@ Plug 'vim-airline/vim-airline-themes'
 "功能：代码补全以及代码函数跳转,快捷键：ctrl+b
 Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer --java-completer --js-completer' }
 "功能：生成YouCompleteMe的配置文件,用法：config_gen.py .
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+Plug 'rdnetto/YCM-Generator', { 'on': 'YcmGenerateConfig','branch':'stable' }
 "功能：git修改显示
 Plug 'mhinz/vim-signify'
 "功能: 代码块补全引擎,快捷键：<leader><Tab>
@@ -53,14 +53,14 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'derekwyatt/vim-protodef'
 Plug 'derekwyatt/vim-fswitch'
 "功能：c++在.h和.cpp文件间跳转,用法：命令模式输入命令A
-Plug 'vim-scripts/a.vim'
+Plug 'vim-scripts/a.vim',{ 'on': 'A' }
 "功能：各种配对符号自动补全
 Plug 'jiangmiao/auto-pairs'
 "功能：异步命令
 Plug 'skywind3000/asyncrun.vim',{'on': 'AsyncRun'}
 "功能：MarkDown文档预览
-Plug 'iamcco/mathjax-support-for-mkdp',{ 'on': '<Plug> MarkdownPreview' }
-Plug 'iamcco/markdown-preview.vim',{ 'on': '<Plug> MarkdownPreview' }
+Plug 'iamcco/mathjax-support-for-mkdp',{'for': 'markdown'}
+Plug 'iamcco/markdown-preview.vim',{'for': 'markdown'}
 "功能：中文输入法问题
 Plug 'vim-scripts/fcitx.vim'
 "功能: ctags和gtags自动生成和管理,
