@@ -1,5 +1,5 @@
 "佛祖保佑 永无BUG
-"(会很容易卡)佛曰: "写字楼里写字间，写字间里程序员； 
+"佛曰: "写字楼里写字间，写字间里程序员； 
 "程序人员写程序，又拿程序换酒钱。 
 "酒醒只在网上坐，酒醉还来网下眠； 
 "酒醉酒醒日复日，网上网下年复年。 
@@ -22,7 +22,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'tomasr/molokai'
 "功能：状态栏和标签页,主题,字体
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes' "功能：代码补全以及代码函数跳转,快捷键：ctrl+b
+Plug 'vim-airline/vim-airline-themes' 
+"功能：代码补全以及代码函数跳转,快捷键：ctrl+b
 Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer --java-completer --js-completer' }
 "功能：生成YouCompleteMe的配置文件,用法：config_gen.py .
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
@@ -30,7 +31,7 @@ Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'mhinz/vim-signify'
 "功能: 代码块补全引擎,快捷键：<leader><Tab>
 Plug 'SirVer/ultisnips'
-"功能：代码块集合
+"功能：代码块模板库
 Plug 'honza/vim-snippets'
 "功能：文本对齐
 Plug 'junegunn/vim-easy-align'
