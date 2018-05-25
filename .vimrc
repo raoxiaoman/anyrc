@@ -400,6 +400,13 @@ let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 " 禁用 gutentags 自动加载 gtags 数据库的行为
 let g:gutentags_auto_add_gtags_cscope = 0
+" 设置忽略某些类型的文件,不生成tags
+function! MyCustomGutentagsEnableFunc(path) abort
+    let endof = fnamemodify(a:path, ':e')
+    return endof != 'md' && endof != 'markdown' 
+endfunction
+let g:gutentags_enabled_user_func = 'MyCustomGutentagsEnableFunc'
+
 " 如果使用 universal ctags 需要增加下面一行
 "let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
