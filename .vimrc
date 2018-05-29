@@ -271,9 +271,9 @@ nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_
 nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
 nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
 "java 需要安装Maven
-nnoremap <silent> <M-F9> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml compile <cr>
-nnoremap <silent> <M-F5> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml exec:java -Dexec.mainClass="com.raohui.$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> <S-F5> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml test <cr>
+nnoremap <silent> <S-F9> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml compile <cr>
+nnoremap <silent> <S-F5> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml exec:java -Dexec.mainClass="com.raohui.$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <S-F6> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml test <cr>
 
 " 设置文件中光标快速移动插件EasyMotion
 let g:EasyMotion_do_mapping = 0
