@@ -71,6 +71,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'skywind3000/vim-preview',{ 'on': 'PreviewQuickfix' }
 "功能: 定义了一系列方括号开头的快捷键
 Plug 'tpope/vim-unimpaired'
+"功能: 自动生成Java class中的get/set方法
+Plug 'vim-scripts/java_getset.vim',{ 'for': 'java' }
 "功能: 管理gtags(被gutentags代替)
 "Plug 'aceofall/gtags.vim'
 "功能：MarkDown文档编辑(molokai配色已经自带,这个作为补充)
@@ -83,8 +85,8 @@ Plug 'tpope/vim-unimpaired'
 "功能：vim里面使用git
 "Plug 'tpope/vim-fugitive'
 "功能：c++函数定义自动生成函数实现,快捷键：<leader>PP
-"Plug 'derekwyatt/vim-protodef'
-"Plug 'derekwyatt/vim-fswitch'
+"Plug 'derekwyatt/vim-protodef',{'for':'cpp'}
+"Plug 'derekwyatt/vim-fswitch',{'for':'cpp'}
 call plug#end()
 
 "设置编码
@@ -435,6 +437,9 @@ inoremap <m-u> <c-\><c-o>:PreviewScroll -1<cr>
 inoremap <m-d> <c-\><c-o>:PreviewScroll +1<cr>
 autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
 autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
+
+"取消java_getset中的快捷键映射
+let g:no_plugin_maps = 1
 
 "设置插件CompleteParameter
 "inoremap <silent><expr> ( complete_parameter#pre_complete("()")
