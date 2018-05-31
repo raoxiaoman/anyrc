@@ -235,7 +235,7 @@ function! Config_Youcompleteme()
     " 开启 YCM 标签补全引擎
     let g:ycm_collect_identifiers_from_tags_files=1
     " 禁止缓存匹配项，每次都重新生成匹配项
-    "let g:ycm_cache_omnifunc=0
+    let g:ycm_cache_omnifunc=0
     " 语法关键字补全
     let g:ycm_seed_identifiers_with_syntax=1
     let g:ycm_key_invoke_completion = '<c-a>'
@@ -302,14 +302,6 @@ let NERDTreeAutoDeleteBuffer=1
 let g:ctrlsf_ackprg = 'ag'
 nnoremap <C-f> :CtrlSF<SPACE>
 
-"设置标签生成插件gtags.vim 设置项
-"let GtagsCscope_Auto_Load = 1
-"let CtagsCscope_Auto_Map = 1
-"let GtagsCscope_Quiet = 1
-"set cscopetag " 使用 cscope 作为 tags 命令
-"set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
-"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
-
 "设置vim_airline插件
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -319,9 +311,6 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_symbols.branch = 'branch'
 "let g:airline_symbols.branch = '⎇'
-
-" 设置搜索文件插件FZF快捷键
-"map <leader>fz :FZF<CR>
 
 " 设置相同多光标控制插件multi_cursor
 let g:multi_cursor_next_key='<C-n>'
@@ -466,3 +455,14 @@ autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
 "imap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
 "let g:syntastic_java_checkers = []
 "let g:EclimFileTypeValidate = 0
+
+" 设置搜索文件插件FZF快捷键
+"map <leader>fz :FZF<CR>
+
+"设置标签生成插件gtags.vim 设置项
+"let GtagsCscope_Auto_Load = 1
+"let CtagsCscope_Auto_Map = 1
+"let GtagsCscope_Quiet = 1
+"set cscopetag " 使用 cscope 作为 tags 命令
+"set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
+"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
