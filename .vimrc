@@ -17,7 +17,7 @@ call plug#begin('~/.vim/plugged')
 "需先安装ag(sudo apt-get install silversearcher-ag),快捷键：ctrl+f
 Plug 'dyng/ctrlsf.vim',{'on': 'CtrlSF'}
 "功能：在当前目录查找目标文件,快捷键ctrl+p
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all','on': 'FZF' }
 "功能：vim主题
 Plug 'tomasr/molokai'
 "功能：状态栏和标签页,主题,字体
@@ -49,9 +49,6 @@ Plug 'justinmk/vim-sneak'
 Plug 'easymotion/vim-easymotion'
 "功能：多光标选中,快捷键：ctrl+n
 Plug 'terryma/vim-multiple-cursors'
-"功能：c++函数定义自动生成函数实现,快捷键：<leader>PP
-Plug 'derekwyatt/vim-protodef'
-Plug 'derekwyatt/vim-fswitch'
 "功能：c++在.h和.cpp文件间跳转,用法：命令模式输入命令A
 Plug 'vim-scripts/a.vim',{ 'on': 'A' }
 "功能：各种配对符号自动补全
@@ -85,6 +82,9 @@ Plug 'tpope/vim-unimpaired'
 "Plug 'artur-shaik/vim-javacomplete2'
 "功能：vim里面使用git
 "Plug 'tpope/vim-fugitive'
+"功能：c++函数定义自动生成函数实现,快捷键：<leader>PP
+"Plug 'derekwyatt/vim-protodef'
+"Plug 'derekwyatt/vim-fswitch'
 call plug#end()
 
 "设置编码
