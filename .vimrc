@@ -123,6 +123,8 @@ syntax enable
 syntax on
 "设置鼠标模式
 set mouse=a
+"设置高亮当前行
+set cursorline
 "设置搜索高亮
 "set hlsearch
 
@@ -440,6 +442,7 @@ autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
 
 "取消java_getset中的快捷键映射
 let g:no_plugin_maps = 1
+
 
 "设置插件CompleteParameter
 "inoremap <silent><expr> ( complete_parameter#pre_complete("()")
