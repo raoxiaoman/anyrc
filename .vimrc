@@ -58,8 +58,6 @@ Plug 'skywind3000/asyncrun.vim',{'on': 'AsyncRun'}
 "功能：MarkDown文档预览
 Plug 'iamcco/mathjax-support-for-mkdp',{'for': 'markdown'}
 Plug 'iamcco/markdown-preview.vim',{'for': 'markdown'}
-"功能：中文输入法问题
-Plug 'vim-scripts/fcitx.vim'
 "功能: ctags和gtags自动生成和管理,
 "vim里面使用GNU GLOBAL，需要先安装GNU GLOBAL(https://www.gnu.org/software/global/)
 "需要安装ctags(sudo apt-get install ctags)
@@ -71,6 +69,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'skywind3000/vim-preview',{ 'on': 'PreviewQuickfix' }
 "功能: 定义了一系列方括号开头的快捷键
 Plug 'tpope/vim-unimpaired'
+"功能：前端标签补全
+Plug 'tpope/vim-ragtag',{'for':'jsp,html,xml,php'}
 "功能: 自动生成Java class中的get/set方法
 Plug 'vim-scripts/java_getset.vim',{ 'for': 'java' }
 "功能: 管理gtags(被gutentags代替)
@@ -80,13 +80,15 @@ Plug 'vim-scripts/java_getset.vim',{ 'for': 'java' }
 "Plug 'plasticboy/vim-markdown'
 "功能：函数补全的同时添加参数
 "Plug 'tenfyzhong/CompleteParameter.vim'
-"功能：java代码补全
-"Plug 'artur-shaik/vim-javacomplete2'
 "功能：vim里面使用git
 "Plug 'tpope/vim-fugitive'
 "功能：c++函数定义自动生成函数实现,快捷键：<leader>PP
 "Plug 'derekwyatt/vim-protodef',{'for':'cpp'}
 "Plug 'derekwyatt/vim-fswitch',{'for':'cpp'}
+"功能：中文输入法问题
+"Plug 'vim-scripts/fcitx.vim'
+"功能：java代码补全
+"Plug 'artur-shaik/vim-javacomplete2',{'for':'java'}
 call plug#end()
 
 "设置编码
@@ -127,6 +129,8 @@ set mouse=a
 set cursorline
 "设置搜索高亮
 "set hlsearch
+"设置自动缩进快捷键
+set pastetoggle=<F12>
 
 " 设置主题颜色为molokai
 set t_Co=256
@@ -268,7 +272,7 @@ let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
 nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
 " 设置java C++ C 的编译和运行快捷键
 "c/c++
-nnoremap <silent> <F9> :AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F9> :AsyncRun g++ -std=c++11 -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
 nnoremap <silent> <F7> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
@@ -278,6 +282,11 @@ nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
 nnoremap <silent> <S-F9> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml compile <cr>
 nnoremap <silent> <S-F5> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml exec:java -Dexec.mainClass="com.raohui.$(VIM_FILENOEXT)" <cr>
 nnoremap <silent> <S-F6> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml test <cr>
+nnoremap <silent> <S-F8> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml clean package tomcat7:deploy <cr>
+nnoremap <silent> <S-F7> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml clean package tomcat7:redeploy <cr>
+nnoremap <silent> <S-F10> :AsyncRun -raw tail -f /mnt/d/share/apache-tomcat-8.5.31/logs/catalina.out <cr>
+nnoremap <silent> <M-s> :AsyncStop <cr>
+
 
 " 设置文件中光标快速移动插件EasyMotion
 let g:EasyMotion_do_mapping = 0
@@ -314,7 +323,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1  
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_symbols.branch = 'branch'
-"let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.branch = '⎇'
 
 " 设置相同多光标控制插件multi_cursor
 let g:multi_cursor_next_key='<C-n>'
@@ -473,4 +482,4 @@ let g:no_plugin_maps = 1
 "let GtagsCscope_Quiet = 1
 "set cscopetag " 使用 cscope 作为 tags 命令
 "set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
-"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
+"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-j
