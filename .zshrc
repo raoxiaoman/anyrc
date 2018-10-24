@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/raohui/.oh-my-zsh
+export ZSH=/home/raohui/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -34,6 +34,8 @@ ZSH_THEME="ys"
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
 
+ZSH_DISABLE_COMPFIX="true"
+
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
@@ -51,7 +53,7 @@ ZSH_THEME="ys"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git wd autojump sublime sudo zsh-autosuggestions zsh-syntax-highlighting extract history-substring-search)
+plugins=(git wd autojump sudo zsh-autosuggestions zsh-syntax-highlighting extract history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -76,20 +78,22 @@ source $ZSH/oh-my-zsh.sh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 export PATH="$PATH:/home/raohui/.vim/plugged/YCM-Generator"
 
-export JAVA_HOME="/usr/local/jdk-10.0.1"
-export NODE_JS_HOME="/home/raohui/software/node-v8.10.0-linux-x64"
-export MAVEN_HOME="/usr/local/apache-maven-3.5.3"
-
-export PATH="$PATH:$JAVA_HOME/bin:$NODE_JS_HOME/bin:$MAVEN_HOME/bin"
+export JAVA_HOME="/mnt/d/share/jdk1.8.0_172"
+export NODE_JS_HOME="/home/raohui/share/node-v8.11.3-linux-x64"
+export MAVEN_HOME="/mnt/d/share/apache-maven-3.5.3"
+export CLASSPATH="$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar"
+export CATALINA_HOME="/mnt/d/share/apache-tomcat-8.5.31"
+export PATH="$PATH:$JAVA_HOME/bin:$NODE_JS_HOME/bin:$MAVEN_HOME/bin:$CLASSPATH:$CATALINA_HOME"
+export HADOOP_HOME=/home/raohui/share/hadoop-2.8.5
+export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
 if [ "$TERM"="linux" ] ;then
 export LANGUAGE=en_US
 export LANG=en_US.UTF-8
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-cat ~/for_jos!
+export DISPLAY=localhost:0.0
+#cat ~/for_jos!
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -100,3 +104,13 @@ cat ~/for_jos!
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias grep="grep --color=auto"
 alias vimrc='vi ~/.vimrc'
+alias mysql='mycli -u root -h localhost'
+alias ljv='cd ~/share/code/learning_Java'
+cur=`pwd`
+if [ "$cur" = "/mnt/c/Users/raoxi" ] ;then
+    cd
+fi 
+if [ "$cur" = "/mnt/c/Windows/System32" ] ;then
+    cd
+fi 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
