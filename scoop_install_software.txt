@@ -1,0 +1,34 @@
+set-executionpolicy remotesigned -scope currentuser
+[environment]::setEnvironmentVariable('ChocolateyInstall','D:\chocolatey','Machine')
+$env:ChocolateyInstall='D:\chocolatey'
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+[environment]::setEnvironmentVariable('SCOOP','D:\Scoop\Applications','User')
+$env:SCOOP='D:\Scoop\Applications'
+iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+[environment]::setEnvironmentVariable('SCOOP_GLOBAL','D:\Scoop\GlobalApps','Machine')
+$env:SCOOP_GLOBAL='D:\Scoop\GlobalApps'
+scoop install mingit
+scoop bucket add extras
+scoop bucket add versions 
+scoop bucket add java
+scoop install sudo
+sudo scoop install 7zip --global
+scoop install shadowsocks
+scoop install snipaste
+scoop install quicklook
+scoop install vcxsrv
+scoop install autohotkey 
+scoop install everything
+scoop install rainmeter
+scoop install mpv 
+scoop install youtube-dl
+scoop install megasync
+scoop install sumatrapdf
+scoop install chromium
+sudo scoop install oraclejdk --global
+scoop install teamviewer
+scoop install vscode
+scoop install idea-ultimate
+
+REM choco install netease-cloudmusic
+REM choco install tim 
