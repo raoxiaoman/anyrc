@@ -26,6 +26,7 @@ scoop install megasync
 scoop install sumatrapdf
 scoop install chromium
 scoop install ccleaner
+scoop install dismplusplus
 sudo scoop install oraclejdk --global
 scoop install teamviewer
 scoop install vscode
