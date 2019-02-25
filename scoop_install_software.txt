@@ -41,5 +41,6 @@ cd .\fonts\
 cd ..
 del .\fonts\
 
-REM choco install netease-cloudmusic
-REM choco install tim 
+scoop install ditto
+choco install netease-cloudmusic
+choco install tim 
