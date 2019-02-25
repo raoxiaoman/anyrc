@@ -29,6 +29,7 @@ scoop install sumatrapdf
 scoop install chromium
 scoop install ccleaner
 scoop install dismplusplus
+scoop install wox 
 sudo scoop install oraclejdk --global
 scoop install teamviewer
 scoop install vscode
