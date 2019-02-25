@@ -25,10 +25,17 @@ scoop install youtube-dl
 scoop install megasync
 scoop install sumatrapdf
 scoop install chromium
+scoop install ccleaner
 sudo scoop install oraclejdk --global
 scoop install teamviewer
 scoop install vscode
 scoop install idea-ultimate
+
+git clone https://github.com/powerline/fonts.git
+cd .\fonts\
+.\install.ps1
+cd ..
+del .\fonts\
 
 REM choco install netease-cloudmusic
 REM choco install tim 
