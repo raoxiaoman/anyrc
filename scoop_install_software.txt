@@ -15,6 +15,7 @@ scoop install sudo
 sudo scoop install 7zip --global
 scoop install shadowsocks
 scoop install shadowsocksr-csharp
+scoop install xx-net 
 scoop install snipaste
 scoop install quicklook
 scoop install vcxsrv
