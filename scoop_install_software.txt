@@ -34,6 +34,7 @@ sudo scoop install oraclejdk --global
 scoop install teamviewer
 scoop install vscode
 scoop install idea-ultimate
+scoop install heidisql
 
 git clone https://github.com/powerline/fonts.git
 cd .\fonts\
