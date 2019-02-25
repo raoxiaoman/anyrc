@@ -7,7 +7,9 @@ export ZSH=/home/raohui/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="ys"
+ZSH_THEME="half-life"
+#ZSH_THEME="refined"
+#ZSH_THEME="ys"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -102,15 +104,29 @@ export DISPLAY=localhost:0.0
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias code "/mnt/d/Microsoft VS Code/Code.exe"
 alias grep="grep --color=auto"
 alias vimrc='vi ~/.vimrc'
 alias mysql='mycli -u root -h localhost'
 alias ljv='cd ~/share/code/learning_Java'
+#alias 7z='7z.exe'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -z "$TMUX" && -n "$USE_TMUX" ]] && {
+    [[ -n "$ATTACH_ONLY" ]] && {
+        tmux a 2>/dev/null || {
+            cd && exec tmux
+        }
+        exit
+    }
+
+    tmux new-window -c "$PWD" 2>/dev/null && exec tmux a
+    exec tmux
+}
 cur=`pwd`
 if [ "$cur" = "/mnt/c/Users/raoxi" ] ;then
-    cd
+    cd /home/raohui/share
 fi 
 if [ "$cur" = "/mnt/c/Windows/System32" ] ;then
-    cd
+    cd /home/raohui/share
 fi 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
