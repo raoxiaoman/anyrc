@@ -109,6 +109,7 @@ alias grep="grep --color=auto"
 alias vimrc='vi ~/.vimrc'
 alias mysql='mycli -u root -h localhost'
 alias ljv='cd ~/share/code/learning_Java'
+alias ho ='cd ~/share/Hexo_blog/source/_posts'
 #alias 7z='7z.exe'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ -z "$TMUX" && -n "$USE_TMUX" ]] && {
