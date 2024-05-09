@@ -23,16 +23,8 @@ Plug 'tomasr/molokai'
 "功能：状态栏和标签页,主题,字体
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' 
-"功能：代码补全以及代码函数跳转,快捷键：ctrl+b
-Plug 'Valloric/YouCompleteMe',{'do': './install.sh --clang-completer --java-completer --js-completer' }
-"功能：生成YouCompleteMe的配置文件,用法：config_gen.py .
-Plug 'rdnetto/YCM-Generator', { 'on': 'YcmGenerateConfig','branch':'stable' }
 "功能：git修改显示
 Plug 'mhinz/vim-signify'
-"功能: 代码块补全引擎,快捷键：<leader><Tab>
-Plug 'SirVer/ultisnips'
-"功能：代码块模板库
-Plug 'honza/vim-snippets'
 "功能：文本对齐
 Plug 'junegunn/vim-easy-align'
 "功能：代码注释,快捷键：<Leader>c<space>
@@ -49,46 +41,17 @@ Plug 'justinmk/vim-sneak'
 Plug 'easymotion/vim-easymotion'
 "功能：多光标选中,快捷键：ctrl+n
 Plug 'terryma/vim-multiple-cursors'
-"功能：c++在.h和.cpp文件间跳转,用法：命令模式输入命令A
-Plug 'vim-scripts/a.vim',{ 'on': 'A' }
 "功能：各种配对符号自动补全
 Plug 'jiangmiao/auto-pairs'
-"功能：异步命令
-Plug 'skywind3000/asyncrun.vim',{'on': 'AsyncRun'}
 "功能：MarkDown文档预览
 Plug 'iamcco/mathjax-support-for-mkdp',{'for': 'markdown'}
 Plug 'iamcco/markdown-preview.vim',{'for': 'markdown'}
-"功能: ctags和gtags自动生成和管理,
-"vim里面使用GNU GLOBAL，需要先安装GNU GLOBAL(https://www.gnu.org/software/global/)
-"需要安装ctags(sudo apt-get install ctags)
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
-"功能: 函数参数提示
-Plug 'Shougo/echodoc.vim'
-"功能: 预览tag
-Plug 'skywind3000/vim-preview',{ 'on': 'PreviewQuickfix' }
 "功能: 定义了一系列方括号开头的快捷键
 Plug 'tpope/vim-unimpaired'
-"功能：前端标签补全
-Plug 'tpope/vim-ragtag',{'for':'jsp,html,xml,php'}
-"功能: 自动生成Java class中的get/set方法
-Plug 'vim-scripts/java_getset.vim',{ 'for': 'java' }
-"功能: 管理gtags(被gutentags代替)
-"Plug 'aceofall/gtags.vim'
-"功能：MarkDown文档编辑(molokai配色已经自带,这个作为补充)
-"Plug 'godlygeek/tabular'
-"Plug 'plasticboy/vim-markdown'
-"功能：函数补全的同时添加参数
-"Plug 'tenfyzhong/CompleteParameter.vim'
-"功能：vim里面使用git
-"Plug 'tpope/vim-fugitive'
-"功能：c++函数定义自动生成函数实现,快捷键：<leader>PP
-"Plug 'derekwyatt/vim-protodef',{'for':'cpp'}
-"Plug 'derekwyatt/vim-fswitch',{'for':'cpp'}
-"功能：中文输入法问题
-"Plug 'vim-scripts/fcitx.vim'
-"功能：java代码补全
-"Plug 'artur-shaik/vim-javacomplete2',{'for':'java'}
+"功能: vim轻量自动补全
+Plug 'skywind3000/vim-auto-popmenu'
+"功能: vim补全字典
+Plug 'skywind3000/vim-dict'
 call plug#end()
 
 "设置编码
@@ -220,74 +183,6 @@ tnoremap <leader>wc  <C-W><C-c>
 "让配置立即生效(会很容易让.vimrc卡住)
 "autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
-"设置模板补全插件UltiSnips
-"tab 键与 YCM 冲突，重新设定
-let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
-let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
-
-"设置YouCompleteMe代码补全和跳转插件
-function! Config_Youcompleteme()
-    " YCM 补全菜单配色
-    highlight Pmenu ctermfg=3 ctermbg=0  guifg=#005f87 guibg=#EEE8D5
-    let g:ycm_global_ycm_extra_conf = '/home/raohui/.ycm_extra_conf.py'
-    "回车即选中当前项
-    inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"    
-    "设置跳转快捷键
-    nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
-    nnoremap <C-b> :YcmCompleter GoTo <CR>
-    " 补全功能在注释中同样有效
-    let g:ycm_complete_in_comments=1
-    " 允许 vim 加载 .ycm_extra_conf.py 文件
-    let g:ycm_confirm_extra_conf=0
-    " 开启 YCM 标签补全引擎
-    let g:ycm_collect_identifiers_from_tags_files=1
-    " 禁止缓存匹配项，每次都重新生成匹配项
-    let g:ycm_cache_omnifunc=0
-    " 语法关键字补全
-    let g:ycm_seed_identifiers_with_syntax=1
-    let g:ycm_key_invoke_completion = '<c-a>'
-    let g:ycm_add_preview_to_completeopt = 0
-    let g:ycm_show_diagnostics_ui = 0
-    let g:ycm_server_log_level = 'info'
-    let g:ycm_min_num_identifier_candidate_chars = 2
-    let g:ycm_collect_identifiers_from_comments_and_strings = 1
-    let g:ycm_complete_in_strings=1
-    set completeopt=menu,menuone
-    noremap <c-a> <NOP>
-    let g:ycm_semantic_triggers =  {
-                \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-                \ 'cs,lua,javascript': ['re!\w{2}'],
-                \ }
-endfunction
-call Config_Youcompleteme()
-
-"设置AsyncRun插件
-" 自动打开 quickfix window ，高度为 6
-let g:asyncrun_open = 6
-" 任务结束时候响铃提醒
-let g:asyncrun_bell = 1
-let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
-" 设置 F10 打开/关闭 Quickfix 窗口
-nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
-" 设置java C++ C 的编译和运行快捷键
-"c/c++
-nnoremap <silent> <F9> :AsyncRun g++ -std=c++11 -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
-nnoremap <silent> <F7> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
-nnoremap <silent> <F4> :AsyncRun -cwd=<root> cmake . <cr>
-"java 需要安装Maven
-nnoremap <silent> <S-F9> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml compile <cr>
-nnoremap <silent> <S-F5> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml exec:java -Dexec.mainClass="com.raohui.$(VIM_FILENOEXT)" <cr>
-nnoremap <silent> <S-F6> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml test <cr>
-nnoremap <silent> <S-F8> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml clean package tomcat7:deploy <cr>
-nnoremap <silent> <S-F7> :AsyncRun -raw  mvn -f $(VIM_FILEDIR)/../../../../../pom.xml clean package tomcat7:redeploy <cr>
-nnoremap <silent> <S-F10> :AsyncRun -raw tail -f /mnt/d/share/apache-tomcat-8.5.31/logs/catalina.out <cr>
-nnoremap <silent> <M-s> :AsyncStop <cr>
-
-
 " 设置文件中光标快速移动插件EasyMotion
 let g:EasyMotion_do_mapping = 0
 map / <Plug>(easymotion-sn)
@@ -313,7 +208,7 @@ let NERDTreeAutoDeleteBuffer=1
 
 " 使用 ctrlsf.vim插件,在工程内全局查找光标所在关键字，设置快捷键。
 let g:ctrlsf_ackprg = 'ag'
-nnoremap <C-f> :CtrlSF<SPACE>
+nnoremap <Leader>sf :CtrlSF<SPACE>
 
 "设置vim_airline插件
 if !exists('g:airline_symbols')
@@ -330,12 +225,6 @@ let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-m>'
 let g:multi_cursor_skip_key='<M-q>'
 let g:multi_cursor_quit_key='<Esc>'
-
-"设置由借口快速生成实现框架插件pullproto(快捷键<leader>PP,<leader>PN)
-" 成员函数的实现顺序与声明顺序一致
-let g:disable_protodef_sorting=1
-" 设置 pullproto.pl 脚本路径
-let g:protodefprotogetter='~/.vim/plugged/vim-protodef/pullproto.pl'
 
 " 设置代码检查插件ale
 set nocompatible
@@ -373,43 +262,6 @@ imap <silent> <leader>smd <Plug>StopMarkdownPreview
 
 "设置auto-pair插件的匹配符号
 let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '(':')' } 
-
-"设置gutentags插件(tags自动生成,代替gtags)
-" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-" 所生成的数据文件的名称
-let g:gutentags_ctags_tagfile = '.tags'
-" 同时开启 ctags 和 gtags 支持：
-let g:gutentags_modules = []
-if executable('ctags')
-    let g:gutentags_modules += ['ctags']
-endif
-"避免不同项目的gtags混淆
-if executable('gtags-cscope') && executable('gtags')
-    let g:gutentags_modules += ['gtags_cscope']
-endif
-" 检测 ~/.cache/tags 不存在就新建
-let s:vim_tags = expand('~/.cache/tags')
-" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-if !isdirectory(s:vim_tags)
-    silent! call mkdir(s:vim_tags, 'p')
-endif
-let g:gutentags_cache_dir = s:vim_tags
-" 配置 ctags 的参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-" 禁用 gutentags 自动加载 gtags 数据库的行为
-let g:gutentags_auto_add_gtags_cscope = 0
-" 设置忽略某些类型的文件,不生成tags
-function! MyCustomGutentagsEnableFunc(path) abort
-    let endof = fnamemodify(a:path, ':e')
-    return endof != 'md' && endof != 'markdown' 
-endfunction
-let g:gutentags_enabled_user_func = 'MyCustomGutentagsEnableFunc'
-
-" 如果使用 universal ctags 需要增加下面一行
-"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 "设置插件LeaderF(代替fzf)
 let g:Lf_ShortcutF = '<c-p>'
@@ -452,34 +304,13 @@ autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
 "取消java_getset中的快捷键映射
 let g:no_plugin_maps = 1
 
-
-"设置插件CompleteParameter
-"inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-"smap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-"imap <M-j> <Plug>(complete_parameter#goto_next_parameter)
-"smap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
-"imap <M-k> <Plug>(complete_parameter#goto_previous_parameter)
-
-"设置javacomplete2插件
-"autocmd FileType java setlocal omnifunc=javacomplete#Complete
-"nmap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
-"imap <M-i> <Plug>(JavaComplete-Imports-AddSmart)
-"nmap <M-a> <Plug>(JavaComplete-Imports-Add)
-"imap <M-a> <Plug>(JavaComplete-Imports-Add)
-"nmap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
-"imap <M-m> <Plug>(JavaComplete-Imports-AddMissing)
-"nmap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
-"imap <M-r> <Plug>(JavaComplete-Imports-RemoveUnused)
-"let g:syntastic_java_checkers = []
-"let g:EclimFileTypeValidate = 0
-
-" 设置搜索文件插件FZF快捷键
-"map <leader>fz :FZF<CR>
-
-"设置标签生成插件gtags.vim 设置项
-"let GtagsCscope_Auto_Load = 1
-"let CtagsCscope_Auto_Map = 1
-"let GtagsCscope_Quiet = 1
-"set cscopetag " 使用 cscope 作为 tags 命令
-"set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
-"set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-j
+" 设置vim-auto-popmenu
+" 设定需要生效的文件类型，如果是 "*" 的话，代表所有类型
+let g:apc_enable_ft = {'*':1}
+" 设定从字典文件以及当前打开的文件里收集补全单词，详情看 ':help cpt'
+set cpt=.,k,w,b
+" 不要自动选中第一个选项。
+set completeopt=menu,menuone,noselect
+" 禁止在下方显示一些啰嗦的提示
+set shortmess+=c
+inoremap <leader><Tab> <C-X><C-F>
