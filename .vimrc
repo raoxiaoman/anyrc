@@ -1,8 +1,8 @@
 "佛祖保佑 永无BUG
-"佛曰: "写字楼里写字间，写字间里程序员； 
-"程序人员写程序，又拿程序换酒钱。 
-"酒醒只在网上坐，酒醉还来网下眠； 
-"酒醉酒醒日复日，网上网下年复年。 
+"佛曰: "写字楼里写字间，写字间里程序员；
+"程序人员写程序，又拿程序换酒钱。
+"酒醒只在网上坐，酒醉还来网下眠；
+"酒醉酒醒日复日，网上网下年复年。
 "但愿老死电脑间，不愿鞠躬老板前；
 "奔驰宝马贵者趣，公交自行程序员。
 "别人笑我忒疯癫，我笑自己命太贱；
@@ -14,15 +14,14 @@
 "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
 "功能：在当前目录下所有文件的内容中查找目标单词,
-"需先安装ag(sudo apt-get install silversearcher-ag),快捷键：ctrl+f
+"需先安装 ag，快捷键：ctrl+f
 Plug 'dyng/ctrlsf.vim',{'on': 'CtrlSF'}
-"功能：在当前目录查找目标文件,快捷键ctrl+p
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all','on': 'FZF' }
 "功能：vim主题
 Plug 'tomasr/molokai'
+Plug 'joshdick/onedark.vim'
 "功能：状态栏和标签页,主题,字体
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes' 
+Plug 'vim-airline/vim-airline-themes'
 "功能：git修改显示
 Plug 'mhinz/vim-signify'
 "功能：文本对齐
@@ -95,10 +94,12 @@ set cursorline
 "设置自动缩进快捷键
 set pastetoggle=<F12>
 
-" 设置主题颜色为molokai
 set t_Co=256
 let g:rehash256 = 1
+" 设置主题颜色为molokai
 colorscheme molokai
+" 设置主题颜色为onedark
+"colorscheme onedark
 
 " 设置leader键
 let mapleader=","
@@ -106,12 +107,6 @@ let mapleader=","
 " 设置特殊文件的filetype
 au BufRead,BufNewFile *.{cc,hpp} set filetype=cpp
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
-"设置MarkDown不自动折叠
-let g:vim_markdown_folding_disabled = 1
-"设置MarkDown文档pyhon-mode主题
-let g:vim_markdown_folding_style_pythonic = 1
-"设置支持yaml语法
-let g:vim_markdown_frontmatter=1 
 
 " 设置背景在黑色和透明间切换
 map <leader>bn :hi Normal ctermfg=white ctermbg=none<CR>
@@ -130,7 +125,7 @@ nnoremap zz :wq<CR>
 
 "设置切换Buffer快捷键"
 nnoremap <C-j> :bn<CR>
-noremap <C-k> :bp<CR>
+nnoremap <C-k> :bp<CR>
 
 "处理alt键不能识别的问题
 function! Terminal_MetaMode(mode)
@@ -178,7 +173,7 @@ call Terminal_MetaMode(0)
 "设置在vim打开sh窗口
 nnoremap <leader>vt :vertical terminal++close<CR>
 nnoremap <leader>t :terminal++close<CR>
-tnoremap <leader>wc  <C-W><C-c> 
+tnoremap <leader>wc  <C-W><C-c>
 
 "让配置立即生效(会很容易让.vimrc卡住)
 "autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -215,7 +210,7 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1  
+let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_symbols.branch = 'branch'
 let g:airline_symbols.branch = '⎇'
@@ -227,7 +222,6 @@ let g:multi_cursor_skip_key='<M-q>'
 let g:multi_cursor_quit_key='<Esc>'
 
 " 设置代码检查插件ale
-set nocompatible
 let g:ale_linters_explicit = 1
 let g:ale_completion_delay = 500
 let g:ale_echo_delay = 20
@@ -239,8 +233,6 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = { 'cpp': ['clang'],'c': ['clang'],'cc': ['clang']}
 let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
 let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
-let g:ale_c_cppcheck_options = ''
-let g:ale_cpp_cppcheck_options = ''
 "let g:ale_sign_error = ">>"
 let g:ale_sign_warning = "w"
 hi! clear SpellBad
@@ -252,16 +244,16 @@ hi! SpellRare gui=undercurl guisp=magenta
 
 "设置MarkDown文档预览插件快捷键
 "普通模式
-nmap <silent> <leader>md <Plug>MarkdownPreview        
+nmap <silent> <leader>md <Plug>MarkdownPreview
 "插入模式
-imap <silent> <leader>md <Plug>MarkdownPreview         
+imap <silent> <leader>md <Plug>MarkdownPreview
 "普通模式
-nmap <silent> <Leader>smd <Plug>StopMarkdownPreview    
+nmap <silent> <Leader>smd <Plug>StopMarkdownPreview
 "插入模式
-imap <silent> <leader>smd <Plug>StopMarkdownPreview    
+imap <silent> <leader>smd <Plug>StopMarkdownPreview
 
 "设置auto-pair插件的匹配符号
-let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '(':')' } 
+let g:AutoPairs = { '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '(':')' }
 
 "设置插件LeaderF(代替fzf)
 let g:Lf_ShortcutF = '<c-p>'
@@ -288,23 +280,10 @@ let g:Lf_NormalMap = {
             \ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
             \ }
 
-"设置echodoc
-"关闭默认模式提醒
-set noshowmode
-let g:echodoc#enable_at_startup = 1
-
-"设置插件vim-preview
-noremap <m-u> :PreviewScroll -1<cr>
-noremap <m-d> :PreviewScroll +1<cr>
-inoremap <m-u> <c-\><c-o>:PreviewScroll -1<cr>
-inoremap <m-d> <c-\><c-o>:PreviewScroll +1<cr>
-autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
-autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
-
-"取消java_getset中的快捷键映射
-let g:no_plugin_maps = 1
 
 " 设置vim-auto-popmenu
+" 回车确认补全候选时不额外输入换行
+let g:apc_cr_confirm = 1
 " 设定需要生效的文件类型，如果是 "*" 的话，代表所有类型
 let g:apc_enable_ft = {'*':1}
 " 设定从字典文件以及当前打开的文件里收集补全单词，详情看 ':help cpt'
@@ -314,3 +293,4 @@ set completeopt=menu,menuone,noselect
 " 禁止在下方显示一些啰嗦的提示
 set shortmess+=c
 inoremap <leader><Tab> <C-X><C-F>
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
